@@ -1,0 +1,342 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html, #root {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    font: 100% 'museo-slab', sans-serif;
+    font-weight: 300;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    overflow: hidden;
+}
+
+p {
+    margin: 8px 0;
+}
+
+p.pre-wrap {
+    white-space: pre-wrap;
+}
+
+a {
+    text-decoration: none;
+}
+
+table {
+    border-spacing: 0;
+    width: 100%;
+    padding-bottom: 8px;
+}
+
+.title {
+    font-size: 1.25rem;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.expand {
+    flex-grow: 1;
+}
+
+.Page {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    overflow-y: auto;
+}
+
+.Container {
+    width: 100%;
+    padding: 24px;
+}
+
+.Container--horizontal {
+    padding: 0 24px;
+}
+
+.Container--vertical {
+    padding: 24px 0;
+}
+
+header {
+    padding: 24px 24px;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+header.Header--noshadow {
+    box-shadow: none;
+}
+
+header .Header__icon {
+    padding-right: 24px;
+}
+
+header .Header__small {
+    font-size: 1rem;
+    margin-top: 8px;
+    font-weight: 300;
+}
+
+header .Header__Sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 8px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+input, textarea, button {
+    font: inherit;
+    padding: 14px 16px;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+    transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    outline: none;
+    width: 100%;
+    margin: 8px 0;
+}
+
+textarea {
+    resize: none;
+}
+
+input:focus, textarea:focus, button:focus {
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+button {
+    width: auto;
+    padding: 12px 24px;
+}
+
+.ButtonGroup button:not(:last-of-type) {
+    margin-right: 8px;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    font-style: italic;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    font-style: italic;
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    font-style: italic;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholde {
+    font-style: italic;
+}
+
+.List {
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.List .List__title {
+    font-size: 1.25rem;
+    padding: 8px 24px;
+}
+
+.List--border .List__title {
+    padding-bottom: 0;
+}
+
+.List--border .ListItem:not(:last-of-type) {
+    border-bottom: 0.5px solid #e4e4e4;
+}
+
+.ListItem {
+    padding: 4px 24px;
+}
+
+.List--border .ListItem {
+    padding: 16px 24px;
+}
+
+.List--border .ListItem:first-of-type {
+    padding-top: 4px;
+}
+
+.ListItem.ListItem--row {
+    display: flex;
+    flex-direction: row;
+}
+
+.ListItem.ListItem--row > * {
+    flex-grow: 1;
+}
+
+.ListItem p {
+    margin: 0;
+}
+
+.ListItem .ListItem__subtitle {
+    font-size: 0.95rem;
+    margin-top: 4px;
+    color: #666666;
+}
+
+.OptionGroup {
+    margin-bottom: 16px;
+    font-size: 1.1rem;
+}
+
+.OptionGroup .Option {
+    margin: 16px 0;
+    margin-left: 16px;
+    transition: font-weight 100ms ease;
+}
+
+.OptionGroup .Option.Option--selected {
+    font-weight: 700;
+}
+
+.CheckCircle {
+    margin: 3px;
+}
+
+.CheckCircle, .CheckCircle .CheckCircle__inner {
+    border-radius: 50%;
+    background-color: cyan;
+    width: 30px;
+    height: 30px;
+}
+
+.CheckCircle .CheckCircle__inner {
+    will-change: transform;
+    transform: scale(0.8);
+    transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.CheckCircle--checked .CheckCircle__inner {
+    transform: scale(0);
+    transition: transform 200ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.CheckCircle input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.DetailsTable td {
+    padding-bottom: 8px;
+    width: 50%;
+}
+
+.DetailsTable .DetailsTable__label {
+    font-weight: 700;
+    padding-right: 16px;
+}
+
+.Calendar .title {
+    margin-left: 9px;
+    font-weight: 700;
+}
+
+.Calendar table {
+    text-align: center;
+}
+
+.Calendar thead {
+    /*font-weight: 700;*/
+    font-style: italic;
+}
+
+.Calendar .Day--filler {
+    opacity: 0.75;
+}
+
+.Calendar .Day__highlight {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.Calendar .Day__highlight--selected {
+    background-color: white;
+    color: cyan;
+}
+
+.Modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.32);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all;
+    padding: 16px;
+}
+
+.Modal__content {
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
+    width: 100%;
+    height: 100%;
+    max-width: 350px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.Modal__content .List__title {
+    padding: 24px;
+    padding-bottom: 16px;
+}
+
+.Modal__content .List {
+    margin-bottom: 0;
+}
+
+.LoadingSpinner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

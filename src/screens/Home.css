@@ -1,0 +1,27 @@
+.Page--index {
+    display: flex;
+    flex-direction: column;
+}
+
+.Page--index .IndexSection {
+    font-weight: 700;
+    color: white;
+    font-size: 1.3rem;
+    flex-grow: 1;
+    width: 100%;
+    padding: 24px 24px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 -2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
+.Page--index .IndexSection--small {
+    flex-grow: initial;
+    font-size: 1.1rem;
+}
+
+.Page--index .IndexTitle {
+    font-weight: 700;
+    padding: 24px 24px;
+    font-size: 1.3rem;
+}

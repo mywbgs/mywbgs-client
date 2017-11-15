@@ -1,0 +1,13 @@
+.Page.Page--homeworkedit {
+    background-color: #C2185B;
+    color: white;
+    padding-bottom: 32px;
+}
+
+.Page.Page--homeworkedit .OptionGroup {
+    margin-bottom: 32px;
+}
+
+.Page.Page--homeworkedit .OptionGroup:last-of-type {
+    margin-bottom: 24px;
+}
