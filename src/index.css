@@ -160,6 +160,11 @@ textarea:-moz-placeholde {
     font-style: italic;
 }
 
+.Help {
+    text-align: right;
+    font-size: 0.95rem;
+}
+
 .List {
     margin-bottom: 16px;
     overflow: hidden;
@@ -255,12 +260,13 @@ textarea:-moz-placeholde {
 
 .DetailsTable td {
     padding-bottom: 8px;
-    width: 50%;
 }
 
 .DetailsTable .DetailsTable__label {
     font-weight: 700;
-    padding-right: 16px;
+    padding-right: 8px;
+    width: 50px;
+    text-align: right;
 }
 
 .Calendar .title {

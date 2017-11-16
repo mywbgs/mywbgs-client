@@ -81,6 +81,18 @@ export const labelForDuration = (start, end) => {
     return `${formatTime(start)} - ${formatTime(end)}`;
 }
 
+export const labelForDurationLong = (start, end) => {
+    const durationType = typeOfDuration(start, end);
+    if(durationType === 'START_SAME_END') {
+        return start.format('HH:mm Do MMM YY');
+    } else if (durationType === 'ALL_DAY') {
+        return start.format('[All day] Do MMM YY');
+    } else if (durationType === 'MANY_DAYS') {
+        return `${start.format('Do MMM YY')} - ${end.format('Do MMM YY')}`;
+    }
+    return `${formatTime(start)} - ${formatTime(end)}`;
+}
+
 export const rankingForDuration = durationType => {
     if (durationType === 'ALL_DAY') {
         return 1
@@ -115,4 +127,21 @@ export const getAllSubjectsInTimetable = timetable => {
     const results = new Set();
     timetable.forEach(day => day.forEach(period => results.add(period.subject)));
     return Array.from(results);
+}
+
+export const getShortRoom = room => {
+    if(room === 'Main School Hall') return 'Main Hall';
+    room = room.toLowerCase();
+    room = room.replace('new field', 'nf');
+    room = room.replace('sports hall', 'sh');
+    room = room.replace('english ', 'e');
+    room = room.replace('technology ', 't');
+    room = room.replace('art ', 'a');
+    room = room.replace('biology ', 'b');
+    room = room.replace('chemistry ', 'c');
+    room = room.replace('physics ', 'p');
+    room = room.replace('economics ', 'ec');
+    room = room.replace('maths room ', 'm');
+    room = room.replace('room ', '');
+    return room.toUpperCase();
 }

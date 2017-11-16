@@ -10,6 +10,12 @@ import Container from '../components/Container';
 import * as actions from '../actions';
 
 class Login extends Component {
+    componentWillMount() {
+        if(this.props.authToken) {
+            this.props.history.replace('/');
+        }
+    }
+
     componentWillReceiveProps(newProps) {
         if(newProps.authToken) {
             // Login successful
@@ -41,7 +47,7 @@ class Login extends Component {
                             <div style={{display: !this.props.working ? 'block' : 'none'}}>Login</div>
                             <div style={{display: this.props.working ? 'block' : 'none'}}><FontAwesome name="circle-o-notch" spin/></div>
                         </button>
-                        <p className="LoginHelp" style={{visibility: this.props.error ? 'visible' : 'hidden'}}>{this.props.error || 'Placeholder'}</p>
+                        <p className="Help" style={{visibility: this.props.error ? 'visible' : 'hidden'}}>{this.props.error || 'Placeholder'}</p>
                     </form>
                 </Container>
             </Page>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as moment from 'moment';
+import * as Fuse from 'fuse.js';
 
 import './Calendar.css';
 
@@ -25,26 +26,36 @@ class Calendar extends Component {
             this.props.history.replace('/login');
             return;
         }
+        if(!this.props.loadingCalendar) {
+            this.createFuse(this.props.calendar);
+        }
+    }
+    
+    componentWillReceiveProps(newProps) {
+        if(this.props.loadingCalendar && !newProps.loadingCalendar) {
+            this.createFuse(newProps.calendar);
+        }
+    }
+
+    createFuse(events) {
+        this.fuse = new Fuse(events, {
+            shouldSort: true,
+            tokenize: true,
+            threshold: 0.2,
+            location: 0,
+            distance: 100,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: [
+                "summary"
+            ]
+        });
     }
 
     render() {
         const selectedDate = this.props.selectedDate;
         const selectedDateStart = selectedDate.clone().startOf('day');
-        const selectedDateEnd = selectedDate.clone().endOf('day');
-        
-        const events = utils.filterUntil(this.props.calendar, (event) => {
-            const before = selectedDateStart.isSameOrBefore(moment(event.end));
-            const after = selectedDateEnd.isSameOrAfter(moment(event.start));
-            if(before && after) {
-                return {match: true};
-            } else if (selectedDateEnd.isBefore(moment(event.start))) {
-                return {quit: true};
-            } else {
-                return {};
-            }
-        })
-            .sort(utils.sortEvents)
-            .map(event => <ListItem key={event.summary} title={event.summary} subtitle={utils.labelForDuration(moment(event.start), moment(event.end))}/>);
+        const selectedDateEnd = selectedDate.clone().add(1, 'day').startOf('day');
         
         let dateModal = null;
         if(this.props.modal) {
@@ -58,6 +69,30 @@ class Calendar extends Component {
                 const items = months.map(month => <ListItem key={month.toString()} title={month.format('MMMM YYYY')} onClick={() => this.props.calendarChangeMonth(month)}/>)
                 dateModal = <Modal onClose={() => this.props.calendarShowModal(false)}><List title="Months" items={items} border/></Modal>
             }
+        }
+
+        let contents = null;
+        if(this.props.query.trim() === '') {
+            const events = utils.filterUntil(this.props.calendar, (event) => {
+                const before = selectedDateStart.isSameOrBefore(moment(event.end));
+                const after = selectedDateEnd.isSameOrAfter(moment(event.start));
+                if(before && after) {
+                    return {match: true};
+                } else if (selectedDateEnd.isBefore(moment(event.start))) {
+                    return {quit: true};
+                } else {
+                    return {};
+                }
+            })
+                .sort(utils.sortEvents)
+                .map(event => <ListItem key={event.id} title={event.summary} subtitle={utils.labelForDuration(moment(event.start), moment(event.end))}/>);
+
+            contents = <List title={selectedDate.format('Do MMMM YYYY')} border items={events}/>;
+        } else {
+            const query = this.props.query.trim().toLowerCase();
+            const events = this.fuse.search(this.props.query)
+                .map(event => <ListItem key={event.id} title={event.summary} subtitle={utils.labelForDurationLong(moment(event.start), moment(event.end))}/>);
+            contents = <List title="Search results" border items={events}/>;
         }
 
         const spinner = (
@@ -86,7 +121,7 @@ class Calendar extends Component {
                     </Container>
                 </div>
                 <Container vertical>
-                    <List title={selectedDate.format('Do MMMM YYYY')} border items={events}/>
+                    {contents}
                 </Container>
                 {dateModal}
             </Page>
@@ -96,9 +131,8 @@ class Calendar extends Component {
     }
 }
 
-
 export default connect(state => {
     const { selectedDate, query, month, modal } = state.calendar;
     const { calendar, loadingCalendar, authToken } = state.datastore;
-    return {loggedIn: !!authToken, selectedDate, query, calendar, month, modal, loadingCalendar};
+    return {loggedIn: !!authToken, selectedDate, query, calendar: calendar.map((event, i) => ({...event, id: i})), month, modal, loadingCalendar};
 }, actions)(withRouter(Calendar));

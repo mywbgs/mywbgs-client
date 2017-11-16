@@ -26,7 +26,6 @@ const calendar = handleActions({
 }, {
     selectedDate: moment(),
     query: '',
-    loading: false,
     modal: false,
     month: moment()
 });

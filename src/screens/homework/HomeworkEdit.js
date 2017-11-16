@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as moment from 'moment';
-import { v4 as uuid } from 'uuid';
 
 import './HomeworkEdit.css';
 
@@ -50,7 +49,6 @@ class HomeworkEdit extends Component {
         if(!this.isValid(formData)) return;
         
         const homework = {
-            _id: uuid(),
             title: formData.title,
             notes: formData.notes,
             due: formData.selectedDate.startOf('day').toDate(),
@@ -58,11 +56,10 @@ class HomeworkEdit extends Component {
             period: utils.firstInstanceOfSubject(formData.selectedSubject, formData.selectedDate, this.props.timetable)
         };
         if(this.props.homework) {
-            this.props.updateHomework(this.props.homework._id, homework);
+            this.props.updateHomework(this.props.homework.id, homework);
         } else {
             this.props.saveHomework(homework);
         }
-        this.props.history.replace('/homework');
     }
 
     isValid = data => {
@@ -70,7 +67,6 @@ class HomeworkEdit extends Component {
     }
 
     componentWillMount() {
-        console.log(this.props);
         if(!this.props.loggedIn) {
             this.props.history.replace('/login');
             return;
@@ -83,6 +79,9 @@ class HomeworkEdit extends Component {
     componentWillReceiveProps(newProps) {
         if(this.props.loading && !newProps.loading) {
             newProps.editLoad(moment(), newProps.timetable, newProps.homework);
+        }
+        if(this.props.homeworkEdit.saving && newProps.homeworkEdit.success) {
+            this.props.history.push('/homework');
         }
     }
 
@@ -130,7 +129,8 @@ class HomeworkEdit extends Component {
                         <form onSubmit={this.save}>
                             <input type="text" placeholder="Title" value={formState.title} onChange={this.updateField('title', this.props.editUpdateField)}/>
                             <textarea placeholder="Notes" rows="5" value={formState.notes} onChange={this.updateField('notes', this.props.editUpdateField)}></textarea>
-                            <button disabled={!submitEnabled}>Save</button>
+                            <button disabled={!submitEnabled || formState.saving}>{formState.saving ? 'Saving' : 'Save'}</button>
+                            <p className="Help" style={{visibility: this.props.homeworkEdit.error ? 'visible' : 'hidden'}}>{this.props.homeworkEdit.error || 'Placeholder'}</p>
                         </form>
                     </Container>
                     {subjectModal}
@@ -152,7 +152,7 @@ export default connect((state, props) => {
     const { homeworkEdit } = state;
     const { timetable, homework, authToken, loadingTimetable, loadingHomework } = state.datastore;
     if(props.match.params.id) {
-        const assignment = homework.find(x => x._id === props.match.params.id);
+        const assignment = homework.find(x => x.id.toString() === props.match.params.id);
         return {loggedIn: !!authToken, homework: assignment, timetable, homeworkEdit, loading: loadingHomework || loadingTimetable};
     } else {
         return {loggedIn: !!authToken, homework: null, timetable, homeworkEdit, loading: loadingTimetable};

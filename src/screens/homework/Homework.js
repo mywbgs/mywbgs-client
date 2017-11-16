@@ -18,7 +18,7 @@ const addNew = history => () => {
 };
 
 const viewHomework = (homework, history) => () => {
-    history.push(`/homework/${homework._id}/view`);
+    history.push(`/homework/${homework.id}/view`);
 }
 
 class Homework extends Component {
@@ -34,18 +34,18 @@ class Homework extends Component {
             const now = moment();
             const today = this.props.homework.filter(homework => moment(homework.due).isSame(now, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework._id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             const tomorrowDate = now.add(1, 'day');
             const tomorrow = this.props.homework.filter(homework => moment(homework.due).isSame(tomorrowDate, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework._id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             const later = this.props.homework.filter(homework => moment(homework.due).isAfter(tomorrowDate, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework._id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             return (
@@ -78,5 +78,5 @@ class Homework extends Component {
 
 export default connect(state => {
     const { homework, timetable, authToken, loadingTimetable, loadingHomework } = state.datastore;
-    return {loggedIn: !!authToken, homework, timetable, loading: loadingTimetable || loadingHomework};
+    return {loggedIn: !!authToken, homework: homework.filter(x => !!x), timetable, loading: loadingTimetable || loadingHomework};
 }, actions)(withRouter(Homework));

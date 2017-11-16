@@ -9,7 +9,7 @@ import Login from './screens/Login';
 import Homework from './screens/homework/Homework';
 import HomeworkEdit from './screens/homework/HomeworkEdit';
 import HomeworkView from './screens/homework/HomeworkView';
-import Menu from './screens/Menu';
+// import Menu from './screens/Menu';
 import Calendar from './screens/Calendar';
 import Timetable from './screens/Timetable';
 
@@ -24,7 +24,7 @@ const App = () => {
                     <Route exact path="/homework/new" component={HomeworkEdit}/>
                     <Route exact path="/homework/:id/edit" component={HomeworkEdit}/>
                     <Route exact path="/homework/:id/view" component={HomeworkView}/>
-                    <Route exact path="/menu" component={Menu}/>
+                    {/* <Route exact path="/menu" component={Menu}/> */}
                     <Route exact path="/calendar" component={Calendar}/>
                     <Route exact path="/timetable" component={Timetable}/>
                 </Switch>

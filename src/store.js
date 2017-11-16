@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
-// import { persistStore, autoRehydrate } from 'redux-persist'
+import { persistStore, autoRehydrate } from 'redux-persist'
 import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 
@@ -14,9 +14,13 @@ const store = createStore(
         thunk.withExtraArgument(api),
         logger,
     ),
-    // autoRehydrate()
+    autoRehydrate()
 );
 
 store.dispatch(downloadAll());
+
+persistStore(store, {
+    whitelist: ['datastore']
+});
 
 export default store;

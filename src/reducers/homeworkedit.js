@@ -9,10 +9,24 @@ const initial = {
     selectedSubject: null,
     dateOptions: [],
     selectedDate: null,
-    modal: false
+    modal: false,
+    saving: false,
+    success: false,
+    error: null
 };
 
 export default handleActions({
+    [actions.saveStart]: (state, action) => ({...state, saving: true, error: null}),
+    [actions.saveHomeworkSuccess]: (state, action) => ({...state, saving: false, success: true}),
+    [actions.updateHomeworkSuccess]: (state, action) => ({...state, saving: false, success: true}),
+    [actions.saveFailed]: (state, action) => {
+        const err = action.payload;
+        let error = 'Could not connect to server';
+        if(err.response) {
+            error = `An unknown error occurred (${err.response.status})`;
+        }
+        return {...state, saving: false, success: false, error};
+    },
     [actions.editUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),
     [actions.editLoad]: (state, action) => {
         return {
@@ -22,7 +36,9 @@ export default handleActions({
             dateOptions: action.payload.dateOptions,
             selectedDate: action.payload.selectedDate,
             title: action.payload.title || '',
-            notes: action.payload.notes || ''
+            notes: action.payload.notes || '',
+            saving: false,
+            success: false
         }
     },
     [actions.editSelectSubject]: (state, action) => {
@@ -43,5 +59,4 @@ export default handleActions({
         return {...state, dateOptions: newDates, selectedDate: action.payload};    
     },
     [actions.editSetModalOpen]: (state, action) => ({...state, modal: action.payload}),
-    [actions.saveHomework]: (state, action) => initial
 }, initial)

@@ -16,10 +16,10 @@ import * as utils from '../../utils';
 import * as actions from '../../actions';
 
 class HomeworkView extends Component {
-    viewHomework = () => this.props.history.push(`/homework/${this.props.homework._id}/edit`);
+    viewHomework = () => this.props.history.push(`/homework/${this.props.homework.id}/edit`);
 
     deleteHomework = () => {
-        this.props.deleteHomework(this.props.homework._id);
+        this.props.deleteHomework(this.props.homework.id);
         this.props.history.replace('/homework');
     }
     
@@ -39,9 +39,11 @@ class HomeworkView extends Component {
             this.props.history.replace('/homework');
             return;
         }
+        console.log(this.props);
     }
 
     componentWillReceiveProps(newProps) {
+        console.log(newProps);
         if(!newProps.homework && !newProps.loading) {
             this.props.history.replace('/homework');
             return;
@@ -57,7 +59,7 @@ class HomeworkView extends Component {
                 <LoadingSpinner colour="#C2185B"/>
             </Page>
         );
-        const page = !this.props.loading ? (
+        const page = this.props.homework ? (
             <Page name="homeworkview">
                 <Header colour="#C2185B" onBack={() => this.props.history.goBack()}>
                     <div className="expand">
@@ -65,7 +67,7 @@ class HomeworkView extends Component {
                         <div className="Header__small">{this.props.subject.subject}</div>
                     </div>
                     <div className="Header__Sidebar">
-                        <CheckCircle checked={this.props.homework.completed} onCheckedChange={() => this.props.updateHomework(this.props.homework._id, {completed: !this.props.homework.completed})} fg="white" bg="#C2185B"/>
+                        <CheckCircle checked={this.props.homework.completed} onCheckedChange={() => this.props.updateHomework(this.props.homework.id, {completed: !this.props.homework.completed})} fg="white" bg="#C2185B"/>
                     </div>
                 </Header>
                 <Container>
@@ -80,13 +82,13 @@ class HomeworkView extends Component {
                 </Container>
             </Page>
         ) : null;
-        return this.props.loading ? spinner : page;
+        return !this.props.homework ? spinner : page;
     }
 }
 
 export default connect((state, ownProps) => {
     const { homework, timetable, authToken, loadingHomework, loadingTimetable } = state.datastore;
-    const assignment = homework.find(x => x._id === ownProps.match.params.id);
+    const assignment = homework.find(x => x.id.toString() === ownProps.match.params.id);
     if(!assignment || loadingHomework || loadingTimetable) {
         return {loggedIn: !!authToken, homework: null, subject: null, loading: loadingHomework || loadingTimetable};
     }

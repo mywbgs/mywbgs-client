@@ -69,36 +69,38 @@ export const editSetModalOpen = createAction('SET_MODAL_OPEN', modal => modal);
 export const editSelectDate = createAction('EDIT_SELECT_DATE', date => date);
 export const editUpdateField = createAction('EDIT_UPDATE_FIELD', (field, value) => ({field, value}));
 
+export const saveStart = createAction('SAVE_START');
+export const saveFailed = createAction('SAVE_FAILED', err => err);
+
 export const saveHomework = homework => {
     return (dispatch, getState, api) => {
         const { authToken } = getState().datastore;
-        dispatch(saveHomeworkLocal(homework));
+        dispatch(saveStart());
         api.createHomework(authToken, homework)
-            .then(success => console.log(`Homework ${homework._id} synced`))
-            .catch(err => dispatch(queueAdd({method: 'createHomework', data: {homework}})))
+            .then(result => dispatch(saveHomeworkSuccess(result)), err => dispatch(saveFailed(err)));
     };
 }
-export const updateHomework = (_id, partial) => {
+export const saveHomeworkSuccess = createAction('SAVE_HOMEWORK_SUCCCESS', homework => ({homework}));
+
+export const updateHomework = (id, partial) => {
     return (dispatch, getState, api) => {
         const { authToken } = getState().datastore;
-        dispatch(updateHomeworkLocal(_id, partial));
-        api.updateHomework(authToken, _id, partial)
-            .then(success => console.log(`Homework ${_id} updated`))
-            .catch(err => dispatch(queueAdd({method: 'updateHomework', data: {_id, partial}})));
+        dispatch(saveStart());
+        api.updateHomework(authToken, id, partial)
+            .then(result => dispatch(updateHomeworkSuccess(id, result)), err => dispatch(saveFailed(err)));
     }
 }
-export const deleteHomework = _id => {
+export const updateHomeworkSuccess = createAction('UPDATE_HOMEWORK_SUCCESS', (id, partial) => ({id, partial}));
+
+export const deleteHomework = id => {
     return (dispatch, getState, api) => {
         const { authToken } = getState().datastore;
-        dispatch(deleteHomeworkLocal(_id));
-        api.deleteHomework(authToken, _id)
-            .then(success => console.log(`Homework ${_id} deleted`))
-            .catch(err => dispatch(queueAdd({method: 'deleteHomework', data: {_id}})))
+        dispatch(saveStart());
+        api.deleteHomework(authToken, id)
+            .then(success => dispatch(deleteHomeworkSuccess(id)), err => dispatch(saveFailed(err)));
     }
 }
-export const saveHomeworkLocal = createAction('SAVE_HOMEWORK_LOCAL', homework => homework);
-export const updateHomeworkLocal = createAction('UPDATE_HOMEWORK_LOCAL', (_id, partial) => ({_id, partial}));
-export const deleteHomeworkLocal = createAction('DELETE_HOMEWORK_LOCAL', _id => _id);
+export const deleteHomeworkSuccess = createAction('DELETE_HOMEWORK_SUCCESS', id => ({id}));
 
 export const downloadPending = createAction('DOWNLOAD_PENDING', group => group);
 export const downloadSuccess = createAction('DOWNLOAD_SUCCESS', (group, data) => ({group, data}));
@@ -121,9 +123,9 @@ export const downloadAll = () => {
         dispatch(downloadPending('Calendar'));
         api.getCalendar(authToken).then(calendar => dispatch(downloadSuccess('Calendar', calendar)), err => dispatch(downloadFailure('Calendar', err)));
         
-        dispatch(downloadPending('Menu'));
-        api.getMenu(authToken).then(menu => dispatch(downloadSuccess('Menu', menu)), err => dispatch(downloadFailure('Menu', err)));
+        // dispatch(downloadPending('Menu'));
+        // api.getMenu(authToken).then(menu => dispatch(downloadSuccess('Menu', menu)), err => dispatch(downloadFailure('Menu', err)));
     }
 };
 
-export const queueAdd = createAction('QUEUE_ADD', request => request);
+// export const queueAdd = createAction('QUEUE_ADD', request => request);

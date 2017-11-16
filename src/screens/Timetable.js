@@ -9,6 +9,8 @@ import Container from '../components/Container';
 import DetailsTable from '../components/DetailsTable';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+import { getShortRoom } from '../utils';
+
 class Timetable extends Component {
     componentWillMount() {
         if(!this.props.loggedIn) {
@@ -20,12 +22,12 @@ class Timetable extends Component {
     render() {
         const timetable = this.props.timetable.map((day, i) => {
             const labels = day.map(period => period.subject);
-            const values = day.map(period => period.room);
+            const values = day.map(period => getShortRoom(period.room));
             const dayOfWeek = moment().isoWeekday(i + 1).format('dddd');
             return (
                 <div key={i}>
                     <p className="title">{dayOfWeek}</p>
-                    <DetailsTable labels={labels} values={values}/>
+                    <DetailsTable labels={values} values={labels}/>
                 </div>
             )
         });
