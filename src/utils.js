@@ -16,7 +16,7 @@ export const firstInstanceOfSubject = (subject, date, timetable) => {
 }
 
 export const getNextPeriodsOfSubject = (subject, timetable, count) => {
-    const daysWithSubject = timetable.map(day => day.reduce((found, period) => found || period.subject === subject, false));
+    const daysWithSubject = timetable.map(day => day.reduce((found, period) => found || (period.subject === subject && !period.free), false));
     if(daysWithSubject.filter(x => x).length === 0) return [];
     // E.g [false, false, true, false, false]
     const results = [];
@@ -30,11 +30,10 @@ export const getNextPeriodsOfSubject = (subject, timetable, count) => {
     return results;
 }
 
-export const getPassedPeriods = (count, date, allPeriods) => periodStarts
-    .filter(period => allPeriods ? true : period.i < 5)
+export const getPassedPeriods = (date) => periodStarts
     .filter(period => date.isAfter(date.clone().hours(period.h).minutes(period.m)))
     .map(period => period.i)
-    .slice(-count).reverse();
+    .reverse();
 
 export const periodToOrdinal = period => ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'][period - 1];
 
@@ -125,7 +124,10 @@ export const formatTime = time => time.format('HH:mm');
 
 export const getAllSubjectsInTimetable = timetable => {
     const results = new Set();
-    timetable.forEach(day => day.forEach(period => results.add(period.subject)));
+    timetable.forEach(day => day.forEach(period => {
+        if(period.free) return;
+        results.add(period.subject);
+    }));
     return Array.from(results);
 }
 

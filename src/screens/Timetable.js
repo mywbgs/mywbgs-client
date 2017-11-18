@@ -20,10 +20,21 @@ class Timetable extends Component {
         }
     }
 
+    shouldRenderPeriod = period => !(period.period === 5 && period.free)
+
     render() {
         const timetable = this.props.timetable.map((day, i) => {
-            const labels = day.map(period => period.subject);
-            const values = day.map(period => getShortRoom(period.room));
+            const periods = day.filter(this.shouldRenderPeriod);
+            const labels = periods.map(period => {
+                if(period.subject && period.room) {
+                    return period.subject + ' · ' + period.teacher;
+                } else if (period.subject) {
+                    return period.subject;
+                } else {
+                    return 'Free period';
+                }
+            });
+            const values = periods.map(period => getShortRoom(period.room));
             const dayOfWeek = moment().isoWeekday(i + 1).format('dddd');
             return (
                 <div key={i}>
