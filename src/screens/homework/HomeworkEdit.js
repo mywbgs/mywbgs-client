@@ -15,6 +15,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 
 import * as actions from '../../actions';
 import * as utils from '../../utils';
+import {HOMEWORK_COLOUR} from '../../consts';
 
 class HomeworkEdit extends Component {
     updateField = (field, editUpdateField) => event => editUpdateField(field, event.target.value);
@@ -111,7 +112,7 @@ class HomeworkEdit extends Component {
             const submitEnabled = this.isValid(formState);
 
             return (
-                <Page name="homeworkedit">
+                <Page name="homeworkedit" background={HOMEWORK_COLOUR}>
                     <Header colour="transparent" noshadow onBack={() => this.props.history.goBack()}>Edit homework</Header>
                     <Container horizontal>
                         <OptionGroup

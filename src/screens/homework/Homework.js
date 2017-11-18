@@ -12,6 +12,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 
 import * as utils from '../../utils';
 import * as actions from '../../actions';
+import {HOMEWORK_COLOUR} from '../../consts';
 
 const addNew = history => () => {
     history.push('/homework/new');
@@ -50,7 +51,7 @@ class Homework extends Component {
 
             return (
                 <Page name="homework">
-                    <Header colour="#C2185B" onBack={() => this.props.history.goBack()}>
+                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
                         <div className="expand">Homework</div>
                         <div>
                             <FontAwesome name="plus" onClick={addNew(this.props.history)}/>
@@ -66,10 +67,10 @@ class Homework extends Component {
         } else {
             return (
                 <Page name="homework">
-                    <Header colour="#C2185B" onBack={() => this.props.history.goBack()}>
+                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
                         Homework
                     </Header>
-                    <LoadingSpinner colour="#C2185B"/>
+                    <LoadingSpinner colour={HOMEWORK_COLOUR}/>
                 </Page>
             );
         }

@@ -14,6 +14,7 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 
 import * as utils from '../../utils';
 import * as actions from '../../actions';
+import {HOMEWORK_COLOUR} from '../../consts';
 
 class HomeworkView extends Component {
     viewHomework = () => this.props.history.push(`/homework/${this.props.homework.id}/edit`);
@@ -53,21 +54,21 @@ class HomeworkView extends Component {
     render() {
         const spinner = (
             <Page name="homeworkview">
-                <Header colour="#C2185B" onBack={() => this.props.history.goBack()}>
+                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
                     View Homework
                 </Header>
-                <LoadingSpinner colour="#C2185B"/>
+                <LoadingSpinner colour={HOMEWORK_COLOUR}/>
             </Page>
         );
         const page = this.props.homework ? (
             <Page name="homeworkview">
-                <Header colour="#C2185B" onBack={() => this.props.history.goBack()}>
+                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
                     <div className="expand">
                         {this.props.homework.title}
                         <div className="Header__small">{this.props.subject.subject}</div>
                     </div>
                     <div className="Header__Sidebar">
-                        <CheckCircle checked={this.props.homework.completed} onCheckedChange={() => this.props.updateHomework(this.props.homework.id, {completed: !this.props.homework.completed})} fg="white" bg="#C2185B"/>
+                        <CheckCircle checked={this.props.homework.completed} onCheckedChange={() => this.props.updateHomework(this.props.homework.id, {completed: !this.props.homework.completed})} fg="white" bg={HOMEWORK_COLOUR}/>
                     </div>
                 </Header>
                 <Container>
@@ -76,7 +77,7 @@ class HomeworkView extends Component {
                     <p className="pre-wrap">{this.props.homework.notes}</p>
                     <Spacer vertical="8px"/>
                     <div className="ButtonGroup">
-                        <Button onClick={this.viewHomework} bg="#C2185B" fg="white" icon="pencil">Edit</Button>
+                        <Button onClick={this.viewHomework} bg={HOMEWORK_COLOUR} fg="white" icon="pencil">Edit</Button>
                         <Button onClick={this.deleteHomework} bg="#f6f6f6" fg="black" icon="trash">Delete</Button>
                     </div>
                 </Container>

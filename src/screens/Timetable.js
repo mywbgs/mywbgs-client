@@ -10,6 +10,7 @@ import DetailsTable from '../components/DetailsTable';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 import { getShortRoom } from '../utils';
+import {TIMETABLE_COLOUR} from '../consts';
 
 class Timetable extends Component {
     componentWillMount() {
@@ -32,7 +33,7 @@ class Timetable extends Component {
             )
         });
 
-        const spinner = <LoadingSpinner colour="#5E35B1"/>;
+        const spinner = <LoadingSpinner colour={TIMETABLE_COLOUR}/>;
         const page = (
             <Container>
                 {timetable}
@@ -41,7 +42,7 @@ class Timetable extends Component {
 
         return (
             <Page name="timetable">
-                <Header colour="#5E35B1" onBack={() => this.props.history.goBack()}>
+                <Header colour={TIMETABLE_COLOUR} onBack={() => this.props.history.goBack()}>
                     Timetable
                 </Header>
                 {this.props.loadingTimetable ? spinner : page}

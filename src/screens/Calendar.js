@@ -16,6 +16,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 import * as actions from '../actions';
 import * as utils from '../utils';
+import {CALENDAR_COLOUR} from '../consts';
 
 const onDateSelected = changeDate => date => changeDate(date);
 const updateQuery = updateQuery => event => updateQuery(event.target.value);
@@ -97,16 +98,16 @@ class Calendar extends Component {
 
         const spinner = (
             <Page name="calendar">
-                <Header colour="#3F51B5" onBack={() => this.props.history.goBack()}>
+                <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.goBack()}>
                     Calendar
                 </Header>
-                <LoadingSpinner colour="#3F51B5"/>
+                <LoadingSpinner colour={CALENDAR_COLOUR}/>
             </Page>
         );
         const page = (
             <Page name="calendar">
-                <div className="FauxHeader">
-                    <Header colour="#3F51B5" onBack={() => this.props.history.goBack()} noshadow>
+                <div className="FauxHeader" style={{backgroundColor: CALENDAR_COLOUR}}>
+                    <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.goBack()} noshadow>
                         Calendar
                     </Header>
                     <Container>
@@ -114,7 +115,7 @@ class Calendar extends Component {
                             month={this.props.month.month()}
                             year={this.props.month.year()}
                             selectedDate={selectedDate}
-                            colour="#3F51B5"
+                            colour={CALENDAR_COLOUR}
                             onDateSelected={onDateSelected(this.props.calendarChangeDate)}
                             onMonthClicked={() => this.props.calendarShowModal(true)}/>
                     <input type="text" placeholder="Search" value={this.props.query} onChange={updateQuery(this.props.calendarUpdateQuery)}/>

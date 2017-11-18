@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import './Home.css';
 import Page from '../components/Page';
 
+import * as consts from '../consts';
+
 const IndexSection = props => {
     return (
         <div
@@ -37,10 +39,10 @@ class Home extends Component {
         return (
             <Page name="index">
                 <div className="IndexTitle">MyWBGS</div>
-                <IndexSection title="Homework" colour="#C2185B" onClick={this.navigateTo('/homework')}/>
-                <IndexSection title="Calendar" colour="#3F51B5" onClick={this.navigateTo('/calendar')}/>
+                <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
+                <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
                 {/* <IndexSection title="Menu" colour="#9C27B0" onClick={this.navigateTo('/menu')}/> */}
-                <IndexSection title="Timetable" colour="#5E35B1" onClick={this.navigateTo('/timetable')}/>
+                <IndexSection title="Timetable" colour={consts.TIMETABLE_COLOUR} onClick={this.navigateTo('/timetable')}/>
                 {/*<IndexSection title="Health and wellbeing" colour="#611B7E" onClick={navigateTo('/wellbeing', props.history)} small/>*/}
             </Page>
         );
