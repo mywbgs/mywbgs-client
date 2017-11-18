@@ -1,10 +1,14 @@
 .Page--login {
-    background: linear-gradient(to right bottom, #4DB6AC, #39958C);
+    background: linear-gradient(to right bottom, #009688, #00796B);
     color: white;
 }
 
 .Page--login .Container, .Page--login form {
     height: 100%;
+}
+
+.Page--login .Container {
+    max-width: 400px;
 }
 
 .Page--login form {

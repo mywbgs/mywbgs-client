@@ -5,8 +5,10 @@ import FontAwesome from 'react-fontawesome';
 const Header = props => {
     return (
         <header className={`bold ${props.noshadow ? `Header--noshadow` : ``}`} style={{backgroundColor: props.colour}}>
-            {/* <div className="Header__icon" onClick={props.onBack}><FontAwesome name="arrow-left"/></div> */}
-            {props.children}
+            <div className="HeaderContent">
+                {/* <div className="Header__icon" onClick={props.onBack}><FontAwesome name="arrow-left"/></div> */}
+                {props.children}
+            </div>
         </header>
     );
 };

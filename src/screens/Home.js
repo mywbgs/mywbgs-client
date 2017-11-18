@@ -13,7 +13,9 @@ const IndexSection = props => {
             className={`IndexSection ${props.small ? `IndexSection--small` : ``}`}
             onClick={props.onClick}
             style={{backgroundColor: props.colour}}>
-            {props.title}
+            <div className="IndexSectionContent">
+                {props.title}
+            </div>
         </div>
     );
 };

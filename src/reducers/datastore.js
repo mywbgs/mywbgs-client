@@ -23,7 +23,6 @@ export default handleActions({
     [actions.downloadSuccess]: (state, action) => ({...state, [`loading${action.payload.group}`]: false, [action.payload.group.toLowerCase()]: action.payload.data}),
     [actions.downloadFailure]: (state, action) => ({...state, [`loading${action.payload.group}`]: false})
 }, {
-    queue: [],
     loadingProfile: false, profile: {},
     loadingHomework: false, homework: [],
     // loadingMenu: false, menu: [],

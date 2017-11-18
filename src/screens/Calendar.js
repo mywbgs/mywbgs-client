@@ -111,13 +111,22 @@ class Calendar extends Component {
                         Calendar
                     </Header>
                     <Container>
-                        <CalendarComponent
-                            month={this.props.month.month()}
-                            year={this.props.month.year()}
-                            selectedDate={selectedDate}
-                            colour={CALENDAR_COLOUR}
-                            onDateSelected={onDateSelected(this.props.calendarChangeDate)}
-                            onMonthClicked={() => this.props.calendarShowModal(true)}/>
+                        <div className="CalendarSlots">
+                            <CalendarComponent
+                                month={this.props.month.month()}
+                                year={this.props.month.year()}
+                                selectedDate={selectedDate}
+                                colour={CALENDAR_COLOUR}
+                                onDateSelected={onDateSelected(this.props.calendarChangeDate)}
+                                onMonthClicked={() => this.props.calendarShowModal(true)}/>
+                            <CalendarComponent
+                                month={(this.props.month.month() + 1) % 12}
+                                year={this.props.month.year() + (this.props.month.month() + 1 <= 11 ? 0 : 1)}
+                                selectedDate={selectedDate}
+                                colour={CALENDAR_COLOUR}
+                                onDateSelected={onDateSelected(this.props.calendarChangeDate)}
+                                onMonthClicked={() => this.props.calendarShowModal(true)}/>
+                        </div>
                     <input type="text" placeholder="Search" value={this.props.query} onChange={updateQuery(this.props.calendarUpdateQuery)}/>
                     </Container>
                 </div>

@@ -11,3 +11,28 @@
 .Page--calendar .Container--vertical {
     padding-bottom: 0;
 }
+
+.Page--calendar .CalendarSlots {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.Page--calendar .Calendar {
+    position: relative;
+    flex-grow: 1;
+}
+
+.Page--calendar .Calendar:not(:last-of-type) {
+    margin-right: 48px;
+}
+
+@media (max-width: 750px) { 
+    .Page--calendar .Calendar:not(:first-of-type) {
+        display: none;
+    }
+
+    .Page--calendar .Calendar:not(:last-of-type) {
+        margin-right: 0;
+    }
+}
