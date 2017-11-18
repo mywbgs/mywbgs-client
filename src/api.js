@@ -1,8 +1,8 @@
 import * as axios from 'axios';
 
 export const instance = axios.create({
-    // baseURL: 'https://mywbgs.herokuapp.com/'
-    baseURL: 'http://localhost:8080'
+    baseURL: 'https://mywbgs.herokuapp.com/'
+    // baseURL: 'http://localhost:8080'
 });
 
 export async function login(username, password) {
