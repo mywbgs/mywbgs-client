@@ -17,10 +17,10 @@ const store = createStore(
     autoRehydrate()
 );
 
-store.dispatch(downloadAll());
-
 persistStore(store, {
     whitelist: ['datastore']
+}, () => {
+    store.dispatch(downloadAll());
 });
 
 export default store;
