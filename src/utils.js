@@ -30,9 +30,10 @@ export const getNextPeriodsOfSubject = (subject, timetable, count) => {
     return results;
 }
 
-export const getPassedPeriods = (date) => periodStarts
+export const getPassedPeriods = (date, lessons) => periodStarts
     .filter(period => date.isAfter(date.clone().hours(period.h).minutes(period.m)))
     .map(period => period.i)
+    .filter(period => period < lessons.length)
     .reverse();
 
 export const periodToOrdinal = period => ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'][period - 1];

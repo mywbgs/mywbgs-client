@@ -28,11 +28,11 @@ export const calendarChangeMonth = createAction('CALENDAR_CHANGE_MONTH', newMont
 export const calendarShowModal = createAction('CALENDAR_SHOW_MODAL', show => show);
 
 export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) => {
-    const suggestedPeriods = utils.getPassedPeriods(date);
     const dayOfWeek = Math.min(date.isoWeekday() - 1, 4);
+    const suggestedPeriods = utils.getPassedPeriods(date, timetable[dayOfWeek]);
 
-    const lessons = suggestedPeriods.map(period => timetable[dayOfWeek][period]).filter(period => !period.free);
-    const subjects = lessons.map(lessons => lessons.subject);
+    const lessons = suggestedPeriods.map(period => timetable[dayOfWeek][period]).filter(period => !period.free).slice(0, 2);
+    const subjects = lessons.map(lesson => lesson.subject);
     let selectedSubject = subjects[0];
     if(homework) {
         const homeworkSubject = utils.getSubject(timetable, moment(homework.due), homework.period).subject;
