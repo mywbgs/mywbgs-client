@@ -20,7 +20,9 @@ const store = createStore(
 persistStore(store, {
     whitelist: ['datastore']
 }, () => {
-    store.dispatch(downloadAll());
+    if(store.getState().datastore.authToken) {
+        store.dispatch(downloadAll());
+    }
 });
 
 export default store;
