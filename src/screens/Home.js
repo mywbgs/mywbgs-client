@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './Home.css';
 import Page from '../components/Page';
 
+import * as actions from '../actions';
 import * as consts from '../consts';
 
 const IndexSection = props => {
@@ -36,11 +37,18 @@ class Home extends Component {
             return;
         }
     }
+
+    logout = e => {
+        e.preventDefault();
+        this.props.logout();
+        this.props.history.push('/login');
+        return;
+    }
     
     render() {
         return (
             <Page name="index">
-                <div className="IndexTitle">MyWBGS</div>
+                <div className="IndexTitle"><span>MyWBGS</span><a href="#" onClick={this.logout}>Logout</a></div>
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
                 {/* <IndexSection title="Menu" colour="#9C27B0" onClick={this.navigateTo('/menu')}/> */}
@@ -54,4 +62,4 @@ class Home extends Component {
 export default connect(state => {
     const { authToken } = state.datastore;
     return {loggedIn: !!authToken};
-})(Home);
+}, actions)(Home);

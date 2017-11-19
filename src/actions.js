@@ -20,6 +20,7 @@ export const login = (username, password) => {
             });
     };
 };
+export const logout = createAction('LOGOUT');
 
 export const calendarChangeDate = createAction('CALENDAR_CHANGE_DATE', newDate => newDate);
 export const calendarUpdateQuery = createAction('CALENDAR_UPDATE_QUERY', newQuery => newQuery);

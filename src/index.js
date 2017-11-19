@@ -5,5 +5,7 @@ import registerServiceWorker from './registerServiceWorker';
 import 'font-awesome/css/font-awesome.css';
 import './index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './store';
+
+ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 registerServiceWorker();

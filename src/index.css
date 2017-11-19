@@ -34,6 +34,7 @@ p.pre-wrap {
 
 a {
     text-decoration: none;
+    color: #00897B;
 }
 
 table {
@@ -280,7 +281,6 @@ textarea:-moz-placeholde {
 
 .Calendar .title {
     margin-left: 9px;
-    text-decoration: underline;
 }
 
 .Calendar table {
@@ -307,7 +307,7 @@ textarea:-moz-placeholde {
 
 .Calendar .Day__highlight--selected {
     background-color: white;
-    color: cyan;
+    color: #00897B;
 }
 
 .Modal {

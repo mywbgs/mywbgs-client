@@ -31,10 +31,19 @@
 }
 
 .Page--index .IndexTitle {
-    font-weight: 700;
     padding: 24px 24px;
-    font-size: 1.3rem;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
+}
+
+.Page--index .IndexTitle span {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.Page--index .IndexTitle a {
+    float: right;
+    position: relative;
+    top: 2px;
 }
