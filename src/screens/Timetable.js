@@ -26,7 +26,7 @@ class Timetable extends Component {
         const timetable = this.props.timetable.map((day, i) => {
             const periods = day.filter(this.shouldRenderPeriod);
             const labels = periods.map(period => {
-                if(period.subject && period.room) {
+                if(period.subject && period.teacher) {
                     return period.subject + ' · ' + period.teacher;
                 } else if (period.subject) {
                     return period.subject;
