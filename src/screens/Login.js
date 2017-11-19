@@ -41,7 +41,7 @@ class Login extends Component {
                 <Container>
                     <form onSubmit={this.submit}>
                         <span className="Logo">MyWBGS</span>
-                        <input type="text" placeholder="Username (eg 12bushn)" value={this.props.username} onChange={this.update('username', this.props.loginUpdateField)}/>
+                        <input type="text" placeholder="Moodle Username" value={this.props.username} onChange={this.update('username', this.props.loginUpdateField)}/>
                         <input type="password" placeholder="Password" value={this.props.password} onChange={this.update('password', this.props.loginUpdateField)}/>
                         <button disabled={buttonDisabled}>
                             <div style={{display: !this.props.working ? 'block' : 'none'}}>Login</div>
