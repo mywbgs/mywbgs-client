@@ -13,7 +13,7 @@ const ListItem = props => {
 };
 
 ListItem.propTypes = {
-    title: PropTypes.string,
+    title: PropTypes.any,
     subtitle: PropTypes.string,
     row: PropTypes.bool,
     onClick: PropTypes.func

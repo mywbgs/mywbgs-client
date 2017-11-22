@@ -218,6 +218,11 @@ textarea:-moz-placeholde {
     margin: 0;
 }
 
+.ListItemTitleChecked .fa {
+    margin-right: 8px;
+    color: #666666;
+}
+
 .ListItem .ListItem__subtitle {
     font-size: 0.95rem;
     margin-top: 4px;

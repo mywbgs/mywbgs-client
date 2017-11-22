@@ -30,23 +30,25 @@ class Homework extends Component {
         }
     }
 
+    getHwkTitleEl = (title, checked) => <div className="ListItemTitleChecked">{checked ? <FontAwesome name="circle" style={{color: HOMEWORK_COLOUR}}/> : <FontAwesome name="circle-thin"/>}{title}</div>
+
     render() {
         if(!this.props.loading) {
             const now = moment();
             const today = this.props.homework.filter(homework => moment(homework.due).isSame(now, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             const tomorrowDate = now.add(1, 'day');
             const tomorrow = this.props.homework.filter(homework => moment(homework.due).isSame(tomorrowDate, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             const later = this.props.homework.filter(homework => moment(homework.due).isAfter(tomorrowDate, 'day')).map(homework => {
                 const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={homework.title} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
             });
 
             return (
