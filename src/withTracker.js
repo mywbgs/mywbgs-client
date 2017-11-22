@@ -17,7 +17,7 @@ const withTracker = (WrappedComponent, options = {}) => {
     const HOC = class extends Component {
         componentDidMount() {
             let page = this.props.location.pathname;
-            const regex = /\/homework\/(\w*)(?:\/.+)?/g.exec(page);
+            const regex = /\/homework\/(\d+)(?:\/.+)?/g.exec(page);
             if(regex && regex[1]) {
                 page = page.replace(`/homework/${regex[1]}`, '/homework');
             }
