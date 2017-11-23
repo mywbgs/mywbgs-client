@@ -30,25 +30,55 @@ class Homework extends Component {
         }
     }
 
-    getHwkTitleEl = (title, checked) => <div className="ListItemTitleChecked">{checked ? <FontAwesome name="circle" style={{color: HOMEWORK_COLOUR}}/> : <FontAwesome name="circle-thin"/>}{title}</div>
+    getHwkTitleEl = homework => {
+        const onClick = e => {
+            this.props.updateHomework(homework.id, {completed: !homework.completed});
+            e.stopPropagation();
+        };
+        return (
+            <div className="ListItemTitleChecked">
+                {homework.completed ? <FontAwesome name="circle" style={{color: HOMEWORK_COLOUR}} onClick={onClick}/> : <FontAwesome name="circle-thin" onClick={onClick}/>}
+                {homework.title}
+            </div>
+        );
+    }
+
+    getHomeworkGroup = list => list.map(homework => {
+        const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
+        return <ListItem key={homework.id} title={this.getHwkTitleEl(homework)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+    });
+
+    getFriendlyTitle = date => {
+        const startOfDay = moment().startOf('day');
+        if(date.isSame(startOfDay, 'day')) {
+            return 'Today';
+        } else if (date.isSame(startOfDay.clone().add(1, 'day'), 'day')) {
+            return 'Tomorrow';
+        } else {
+            return date.format('dddd Do MMMM');
+        }
+    }
 
     render() {
         if(!this.props.loading) {
-            const now = moment();
-            const today = this.props.homework.filter(homework => moment(homework.due).isSame(now, 'day')).map(homework => {
-                const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+            const startOfDay = moment().startOf('day');
+            const groupedHomework = {};
+            this.props.homework.forEach(homework => {
+                const diff = moment(homework.due).diff(startOfDay, 'days');
+                if(diff < 0) return;
+                if(groupedHomework[diff]) {
+                    groupedHomework[diff].push(homework);
+                } else {
+                    groupedHomework[diff] = [homework];
+                }
             });
 
-            const tomorrowDate = now.add(1, 'day');
-            const tomorrow = this.props.homework.filter(homework => moment(homework.due).isSame(tomorrowDate, 'day')).map(homework => {
-                const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
-            });
-
-            const later = this.props.homework.filter(homework => moment(homework.due).isAfter(tomorrowDate, 'day')).map(homework => {
-                const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-                return <ListItem key={homework.id} title={this.getHwkTitleEl(homework.title, homework.completed)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+            const sections = Object.keys(groupedHomework).map(key => {
+                const date = startOfDay.clone().add(key, 'days');
+                const title = this.getFriendlyTitle(date);
+                const homeworks = groupedHomework[key].sort((a, b) => a.period - b.period);
+                const items = this.getHomeworkGroup(homeworks);
+                return <List key={key} title={title} items={items} border/>;
             });
 
             return (
@@ -60,9 +90,7 @@ class Homework extends Component {
                         </div>
                     </Header>
                     <Container vertical>
-                        {today.length > 0 ? <List title="Today" items={today} border/> : null}
-                        {tomorrow.length > 0 ? <List title="Tomorrow" items={tomorrow} border/> : null}
-                        {later.length > 0 ? <List title="Later" items={later} border/> : null}
+                        {sections}
                     </Container>
                 </Page>
             );

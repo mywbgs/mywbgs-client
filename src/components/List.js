@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ListItem = props => {
-    const title = props.title ? <p className="ListItem__title">{props.title}</p> : null;
-    const subtitle = props.subtitle ? <p className="ListItem__subtitle">{props.subtitle}</p> : null;
+    const title = props.title ? <div className="ListItem__title">{props.title}</div> : null;
+    const subtitle = props.subtitle ? <div className="ListItem__subtitle">{props.subtitle}</div> : null;
     return (
         <div className={`ListItem ${props.row ? `ListItem--row` : ``}`} onClick={props.onClick}>
             {title}
