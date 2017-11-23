@@ -75,8 +75,8 @@ class Calendar extends Component {
         let contents = null;
         if(this.props.query.trim() === '') {
             const events = utils.filterUntil(this.props.calendar, (event) => {
-                const before = selectedDateStart.isSameOrBefore(moment(event.end));
-                const after = selectedDateEnd.isSameOrAfter(moment(event.start));
+                const before = selectedDateStart.isBefore(moment(event.end));
+                const after = selectedDateEnd.isAfter(moment(event.start));
                 if(before && after) {
                     return {match: true};
                 } else if (selectedDateEnd.isBefore(moment(event.start))) {

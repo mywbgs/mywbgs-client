@@ -61,7 +61,7 @@ export const filterUntil = (array, predicate) => {
 export const typeOfDuration = (start, end) => {
     if(start.isSame(end)) {
         return 'START_SAME_END';
-    } else if (start.isSame(end.clone().startOf('day')) && end.isSame(start.clone().endOf('day'))) {
+    } else if (start.isSame(end.clone().subtract(1, 'day'))) {
         return 'ALL_DAY';
     } else if (!start.clone().startOf('day').isSame(end.clone().startOf('day'))) {
         return 'MANY_DAYS';
