@@ -6,7 +6,7 @@ import * as actions from '../actions';
 const initial = {
     loadingProfile: false, profile: {},
     loadingHomework: false, homework: [],
-    // loadingMenu: false, menu: [],
+    loadingMenu: false, menu: [],
     loadingCalendar: false, calendar: [],
     loadingTimetable: false, timetable: [],
     authToken: null, hydrated: false

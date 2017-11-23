@@ -7,7 +7,7 @@ import Login from './screens/Login';
 import Homework from './screens/homework/Homework';
 import HomeworkEdit from './screens/homework/HomeworkEdit';
 import HomeworkView from './screens/homework/HomeworkView';
-// import Menu from './screens/Menu';
+import Menu from './screens/Menu';
 import Calendar from './screens/Calendar';
 import Timetable from './screens/Timetable';
 import withTracker from './withTracker';
@@ -22,7 +22,7 @@ const App = props => {
                 <Route exact path="/homework/new" component={withTracker(HomeworkEdit)}/>
                 <Route exact path="/homework/:id/edit" component={withTracker(HomeworkEdit)}/>
                 <Route exact path="/homework/:id/view" component={withTracker(HomeworkView)}/>
-                {/* <Route exact path="/menu" component={withTracker(Menu)}/> */}
+                <Route exact path="/menu" component={withTracker(Menu)}/>
                 <Route exact path="/calendar" component={withTracker(Calendar)}/>
                 <Route exact path="/timetable" component={withTracker(Timetable)}/>
             </Switch>

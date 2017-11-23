@@ -125,8 +125,8 @@ export const downloadAll = () => {
         dispatch(downloadPending('Calendar'));
         api.getCalendar(authToken).then(calendar => dispatch(downloadSuccess('Calendar', calendar)), err => dispatch(downloadFailure('Calendar', err)));
         
-        // dispatch(downloadPending('Menu'));
-        // api.getMenu(authToken).then(menu => dispatch(downloadSuccess('Menu', menu)), err => dispatch(downloadFailure('Menu', err)));
+        dispatch(downloadPending('Menu'));
+        api.getMenu(authToken).then(menu => dispatch(downloadSuccess('Menu', menu)), err => dispatch(downloadFailure('Menu', err)));
     }
 };
 

@@ -64,14 +64,14 @@ export async function getCalendar(authToken) {
     return response.data;
 }
 
-// export async function getMenu(authToken) {
-//     const response = await instance({
-//         method: 'get',
-//         url: '/menu',
-//         headers: {'X-Auth': authToken}
-//     });
-//     return response.data;
-// }
+export async function getMenu(authToken) {
+    const response = await instance({
+        method: 'get',
+        url: '/menu',
+        headers: {'X-Auth': authToken}
+    });
+    return response.data;
+}
 
 export async function createHomework(authToken, data) {
     const response = await instance({

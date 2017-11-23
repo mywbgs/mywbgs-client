@@ -44,6 +44,16 @@ class Home extends Component {
         this.props.history.push('/login');
         return;
     }
+
+    shouldShowMenu = () => {
+        if(this.props.loadingProfile) {
+            return false;
+        } else if(this.props.profile.form.startsWith('L6') || this.props.profile.form.startsWith('U6')) {
+            return false;
+        } else {
+            return true;
+        }
+    }
     
     render() {
         return (
@@ -51,15 +61,14 @@ class Home extends Component {
                 <div className="IndexTitle"><span>MyWBGS</span><a href="#" onClick={this.logout}>Logout</a></div>
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
-                {/* <IndexSection title="Menu" colour="#9C27B0" onClick={this.navigateTo('/menu')}/> */}
                 <IndexSection title="Timetable" colour={consts.TIMETABLE_COLOUR} onClick={this.navigateTo('/timetable')}/>
-                {/*<IndexSection title="Health and wellbeing" colour="#611B7E" onClick={navigateTo('/wellbeing', props.history)} small/>*/}
+                {this.shouldShowMenu() ? <IndexSection title="Menu" colour={consts.MENU_COLOUR} onClick={this.navigateTo('/menu')}/> : null}
             </Page>
         );
     }
 }
 
 export default connect(state => {
-    const { authToken } = state.datastore;
-    return {loggedIn: !!authToken};
+    const { authToken, profile, loadingProfile } = state.datastore;
+    return {loggedIn: !!authToken, profile, loadingProfile};
 }, actions)(Home);

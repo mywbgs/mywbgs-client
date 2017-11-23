@@ -10,6 +10,8 @@ import List, { ListItem } from '../components/List';
 import Container from '../components/Container';
 import LoadingSpinner from '../components/LoadingSpinner';
 
+import {MENU_COLOUR} from '../consts';
+
 class Menu extends Component {
     componentWillMount() {
         if(!this.props.loggedIn) {
@@ -19,21 +21,26 @@ class Menu extends Component {
     }
 
     render() {
-        const items = this.props.menu.map((day, i) => {
-        const options = day.map((option, optioni) => <ListItem key={i * this.props.menu.length + optioni} title={option.item}/>);
-            const dayOfWeek = moment().isoWeekday(i + 1).format('dddd');
-            return <List key={i} title={dayOfWeek} items={options}/>
+        const items = this.props.menu.map((day, dayi) => {
+            const title = moment().isoWeekday(dayi + 1).format('dddd');
+            const options = [
+                <ListItem key={'main' + dayi} title={day.main}/>,
+                <ListItem key={'veggie' + dayi} title={day.veggie}/>,
+                <ListItem key={'sides' + dayi} title={day.sides}/>,
+                <ListItem key={'dessert' + dayi} title={day.dessert}/>,
+            ]
+            return <List key={'day' + dayi} title={title} items={options}/>;
         });
 
         const header = (
-            <Header colour="#9C27B0" onBack={() => this.props.history.goBack()}>
+            <Header colour={MENU_COLOUR} onBack={() => this.props.history.goBack()}>
                 Menu
             </Header>
         );
         const spinner = (
             <Page name="menu">
                 {header}
-                <LoadingSpinner colour="#9C27B0"/>
+                <LoadingSpinner colour={MENU_COLOUR}/>
             </Page>
         );
         const page = (
