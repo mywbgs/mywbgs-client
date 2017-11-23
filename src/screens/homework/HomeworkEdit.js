@@ -86,6 +86,12 @@ class HomeworkEdit extends Component {
         }
     }
 
+    onKeyDown = e => {
+        if(e.ctrlKey && e.keyCode == 13) {
+            this.save(e);
+        }
+    }
+
     render() {
         if(!this.props.loading) {
             const formState = this.props.homeworkEdit;
@@ -128,8 +134,8 @@ class HomeworkEdit extends Component {
                                 onSelected={this.selectDateFromIndex}/>
                         : null}
                         <form onSubmit={this.save}>
-                            <input type="text" placeholder="Title" value={formState.title} onChange={this.updateField('title', this.props.editUpdateField)}/>
-                            <textarea placeholder="Notes" rows="5" value={formState.notes} onChange={this.updateField('notes', this.props.editUpdateField)}></textarea>
+                            <input type="text" placeholder="Title" value={formState.title} onKeyDown={this.onKeyDown} onChange={this.updateField('title', this.props.editUpdateField)}/>
+                            <textarea placeholder="Notes" rows="5" value={formState.notes} onKeyDown={this.onKeyDown} onChange={this.updateField('notes', this.props.editUpdateField)}></textarea>
                             <button disabled={!submitEnabled || formState.saving}>{formState.saving ? 'Saving' : 'Save'}</button>
                             <p className="Help" style={{visibility: this.props.homeworkEdit.error ? 'visible' : 'hidden'}}>{this.props.homeworkEdit.error || 'Placeholder'}</p>
                         </form>
