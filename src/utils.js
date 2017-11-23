@@ -76,7 +76,7 @@ export const labelForDuration = (start, end) => {
     } else if (durationType === 'ALL_DAY') {
         return 'All day';
     } else if (durationType === 'MANY_DAYS') {
-        return `${start.format('dddd Do')} - ${end.format('dddd Do')}`;
+        return `${start.format('dddd Do')} - ${end.clone().subtract(1, 'day').format('dddd Do')}`;
     }
     return `${formatTime(start)} - ${formatTime(end)}`;
 }
@@ -88,7 +88,7 @@ export const labelForDurationLong = (start, end) => {
     } else if (durationType === 'ALL_DAY') {
         return start.format('[All day] Do MMM YY');
     } else if (durationType === 'MANY_DAYS') {
-        return `${start.format('Do MMM YY')} - ${end.format('Do MMM YY')}`;
+        return `${start.format('Do MMM YY')} - ${end.clone().subtract(1, 'day').format('Do MMM YY')}`;
     }
     return `${formatTime(start)} - ${formatTime(end)}`;
 }
