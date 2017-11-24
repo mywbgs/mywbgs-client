@@ -48,7 +48,7 @@ class Home extends Component {
     shouldShowMenu = () => {
         if(this.props.loadingProfile) {
             return false;
-        } else if((this.props.profile && this.props.profile) ? (this.props.profile.form.startsWith('L6') || this.props.profile.form.startsWith('U6')) : true) {
+        } else if((this.props.profile && this.props.profile.form) ? (this.props.profile.form.startsWith('L6') || this.props.profile.form.startsWith('U6')) : true) {
             return false;
         } else {
             return true;
