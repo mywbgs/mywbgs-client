@@ -11,12 +11,17 @@ import store from './store';
 try {
     ReactDOM.render(<App store={store}/>, document.getElementById('root'));
 } catch(err) {
-    const state = store.getState();
-    Raven.setUserContext({
-        username: state.datastore.profile.username,
-        email: state.datastore.profile.email
-    });
-    Raven.captureException(err);
-    Raven.showReportDialog();
+    if(process.env.NODE_ENV === 'production') {
+        const state = store.getState();
+        Raven.setUserContext({
+            username: state.datastore.profile.username,
+            email: state.datastore.profile.email
+        });
+        Raven.captureException(err);
+        Raven.showReportDialog();
+        console.log('Error logged to Sentry');
+    } else {
+        throw err;
+    }
 }
 registerServiceWorker();
