@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import * as moment from 'moment';
+import Raven from 'raven-js';
 
 import * as utils from './utils';
 
@@ -20,7 +21,11 @@ export const login = (username, password) => {
             });
     };
 };
-export const logout = createAction('LOGOUT');
+export const logout = createAction('LOGOUT', () => {
+    if(process.env.NODE_ENV === 'production') {
+        Raven.setUserContext();
+    }
+});
 
 export const calendarChangeDate = createAction('CALENDAR_CHANGE_DATE', newDate => newDate);
 export const calendarUpdateQuery = createAction('CALENDAR_UPDATE_QUERY', newQuery => newQuery);
@@ -138,9 +143,19 @@ export const downloadAll = () => {
         
         dispatch(downloadPending('Timetable'));
         api.getTimetable(authToken).then(timetable => dispatch(downloadSuccess('Timetable', timetable)), err => dispatch(downloadFailure('Timetable', err)));
-        
+
         dispatch(downloadPending('Profile'));
-        api.getProfile(authToken).then(profile => dispatch(downloadSuccess('Profile', profile)), err => dispatch(downloadFailure('Profile', err)));
+        api.getProfile(authToken).then(profile => {
+            if(process.env.NODE_ENV === 'production') {
+                const {username, email, form} = profile;
+                Raven.setUserContext({
+                    username,
+                    email,
+                    year: form.substring(0, form.length - 1)
+                });
+            }
+            dispatch(downloadSuccess('Profile', profile))   
+        }, err => dispatch(downloadFailure('Profile', err)));
         
         dispatch(downloadPending('Calendar'));
         api.getCalendar(authToken).then(calendar => dispatch(downloadSuccess('Calendar', calendar)), err => dispatch(downloadFailure('Calendar', err)));
