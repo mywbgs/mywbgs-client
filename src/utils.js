@@ -12,7 +12,7 @@ export const periodStarts = [
 export const firstInstanceOfSubject = (subject, teacher, date, timetable) => {
     const day = date.isoWeekday() - 1;
     if(day > 4) throw new Error('Cannot be on weekend!');
-    return timetable[day].findIndex(period => period.subject === subject && period.teacher === teacher);
+    return Math.max(timetable[day].findIndex(period => period.subject === subject && period.teacher === teacher, 0));
 }
 
 export const getNextPeriodsOfSubject = (subject, timetable, teacher, count) => {
@@ -41,7 +41,7 @@ export const periodToOrdinal = period => ['First', 'Second', 'Third', 'Fourth', 
 export const getLesson = (timetable, date, period) => {
     const dayOfWeek = date.isoWeekday() - 1;
     if(dayOfWeek > 4) throw new Error('Cannot be on weekend!');
-    return timetable[dayOfWeek][period];
+    return timetable[dayOfWeek][Math.max(period, 0)];
 }
 
 export const filterUntil = (array, predicate) => {
