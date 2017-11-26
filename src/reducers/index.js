@@ -9,7 +9,7 @@ import * as actions from '../actions';
 const login = handleActions({
     [actions.loginUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),
     [actions.loginPending]: (state, action) => ({...state, working: true, error: null}),
-    [actions.loginSuccess]: (state, action) => ({...state, working: false, error: null}),
+    [actions.loginSuccess]: (state, action) => ({...state, working: false, error: null, username: '', password: ''}),
     [actions.loginFailure]: (state, action) => ({...state, working: false, error: action.payload})
 }, {
     username: '',
