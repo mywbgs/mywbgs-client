@@ -44,8 +44,8 @@ class Homework extends Component {
     }
 
     getHomeworkGroup = list => list.map(homework => {
-        const subject = utils.getSubject(this.props.timetable, moment(homework.due), homework.period);
-        return <ListItem key={homework.id} title={this.getHwkTitleEl(homework)} subtitle={subject.subject} onClick={viewHomework(homework, this.props.history)}/>
+        const lesson = utils.getLesson(this.props.timetable, moment(homework.due), homework.period);
+        return <ListItem key={homework.id} title={this.getHwkTitleEl(homework)} subtitle={`${lesson.subject} · ${lesson.teacher}`} onClick={viewHomework(homework, this.props.history)}/>
     });
 
     getFriendlyTitle = date => {

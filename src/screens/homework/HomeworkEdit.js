@@ -33,6 +33,8 @@ class HomeworkEdit extends Component {
         this.props.editSetModalOpen(false);
     }
 
+    selectTeacherFromIndex = teacherIndex => this.props.editSelectTeacher(this.props.homeworkEdit.selectedSubject, this.props.homeworkEdit.teacherOptions[teacherIndex], this.props.timetable);
+
     selectDateFromIndex = dateIndex => {
         if(dateIndex < this.props.homeworkEdit.dateOptions.length) {
             this.selectDate(this.props.homeworkEdit.dateOptions[dateIndex]);
@@ -54,7 +56,7 @@ class HomeworkEdit extends Component {
             notes: formData.notes,
             due: formData.selectedDate.startOf('day').toDate(),
             completed: false,
-            period: utils.firstInstanceOfSubject(formData.selectedSubject, formData.selectedDate, this.props.timetable)
+            period: utils.firstInstanceOfSubject(formData.selectedSubject, formData.selectedTeacher, formData.selectedDate, this.props.timetable)
         };
         if(this.props.homework) {
             this.props.updateHomework(this.props.homework.id, homework);
@@ -87,7 +89,7 @@ class HomeworkEdit extends Component {
     }
 
     onKeyDown = e => {
-        if(e.ctrlKey && e.keyCode == 13) {
+        if(e.ctrlKey && e.keyCode === 13 && this.isValid()) {
             this.save(e);
         }
     }
@@ -97,6 +99,7 @@ class HomeworkEdit extends Component {
             const formState = this.props.homeworkEdit;
 
             const selectedSubjectIndex = formState.selectedSubject ? formState.subjectOptions.findIndex(subject => subject === formState.selectedSubject) : null;
+            const selectedTeacherIndex = formState.selectedTeacher ? formState.teacherOptions.findIndex(teacher => teacher === formState.selectedTeacher) : null;
             const dateOptions = [...formState.dateOptions.map(date => date.format('dddd Do MMMM')), 'Other'];
             dateOptions[0] = 'Next lesson';
             const selectedDateIndex = formState.selectedDate ? formState.dateOptions.findIndex(date => date.isSame(formState.selectedDate, 'day')) : null;
@@ -110,7 +113,7 @@ class HomeworkEdit extends Component {
 
             let dateModal = null;
             if(formState.modal === 'DATE') {
-                const dates = utils.getNextPeriodsOfSubject(formState.selectedSubject, this.props.timetable, 10)
+                const dates = utils.getNextPeriodsOfSubject(formState.selectedSubject, this.props.timetable, formState.selectedTeacher, 20)
                     .map(date => <ListItem key={date.toString()} title={date.format('dddd Do MMMM')} onClick={() => this.selectDate(date)}/>);
                 dateModal = <Modal onClose={() => this.props.editSetModalOpen(false)}><List title="Due" items={dates} border/></Modal>
             }
@@ -126,7 +129,14 @@ class HomeworkEdit extends Component {
                             options={[...formState.subjectOptions, 'Pick'] || ['Other']}
                             selected={selectedSubjectIndex}
                             onSelected={this.selectSubjectFromIndex}/>
-                        {formState.subjectOptions.length > 0 ?
+                        {formState.teacherOptions.length > 1 ?
+                            <OptionGroup
+                                title="Teacher"
+                                options={formState.teacherOptions}
+                                selected={selectedTeacherIndex}
+                                onSelected={this.selectTeacherFromIndex}/>
+                        : null}
+                        {formState.subjectOptions.length > 1 ?
                             <OptionGroup
                                 title="Due"
                                 options={[...dateOptions]}

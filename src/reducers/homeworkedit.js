@@ -7,6 +7,8 @@ const initial = {
     notes: '',
     subjectOptions: [],
     selectedSubject: null,
+    teacherOptions: [],
+    selectedTeacher: null,
     dateOptions: [],
     selectedDate: null,
     modal: false,
@@ -30,7 +32,7 @@ export default handleActions({
     [actions.editUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),
     [actions.editLoad]: (state, action) => {
         return {
-            ...state,
+            ...initial,
             subjectOptions: action.payload.subjects,
             selectedSubject: action.payload.selectedSubject,
             dateOptions: action.payload.dateOptions,
@@ -48,7 +50,10 @@ export default handleActions({
             const index = Math.max(newOptions.length - 1, 0);
             newOptions[index] = action.payload.subject;
         }
-        return {...state, subjectOptions: newOptions, selectedSubject: action.payload.subject, dateOptions: action.payload.dateOptions, selectedDate: action.payload.selectedDate};
+        return {...state, subjectOptions: newOptions, selectedSubject: action.payload.subject, teacherOptions: action.payload.teacherOptions, selectedTeacher: action.payload.selectedTeacher, dateOptions: action.payload.dateOptions, selectedDate: action.payload.selectedDate};
+    },
+    [actions.editSelectTeacher]: (state, action) => {
+        return {...state, ...action.payload};
     },
     [actions.editSelectDate]: (state, action) => {
         const isCurrentOption = state.dateOptions.findIndex(date => date.isSame(action.payload, 'day')) !== -1;

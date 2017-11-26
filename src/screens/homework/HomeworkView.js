@@ -65,15 +65,14 @@ class HomeworkView extends Component {
                 <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
                     <div className="expand">
                         {this.props.homework.title}
-                        <div className="Header__small">{this.props.subject.subject}</div>
+                        <div className="Header__small">{this.props.lesson.subject}</div>
                     </div>
                     <div className="Header__Sidebar">
                         <CheckCircle checked={this.props.homework.completed} onCheckedChange={() => this.props.updateHomework(this.props.homework.id, {completed: !this.props.homework.completed})} fg="white" bg={HOMEWORK_COLOUR}/>
                     </div>
                 </Header>
                 <Container>
-                    <DetailsTable labels={['Due', 'Period']} values={[moment(this.props.homework.due).format('Do MMMM'), utils.periodToOrdinal(this.props.homework.period + 1)]}/>
-                    <Spacer vertical="8px"/>
+                    <DetailsTable labels={['Due', 'Teacher', 'Period']} values={[moment(this.props.homework.due).format('Do MMMM'), this.props.lesson.teacher, utils.periodToOrdinal(this.props.homework.period + 1)]}/>
                     <p className="pre-wrap">{this.props.homework.notes}</p>
                     <Spacer vertical="8px"/>
                     <div className="ButtonGroup">
@@ -91,8 +90,8 @@ export default connect((state, ownProps) => {
     const { homework, timetable, authToken, loadingHomework, loadingTimetable } = state.datastore;
     const assignment = homework.find(x => x.id.toString() === ownProps.match.params.id);
     if(!assignment || loadingHomework || loadingTimetable) {
-        return {loggedIn: !!authToken, homework: null, subject: null, loading: loadingHomework || loadingTimetable};
+        return {loggedIn: !!authToken, homework: null, lesson: null, loading: loadingHomework || loadingTimetable};
     }
-    const subject = utils.getSubject(timetable, moment(assignment.due), assignment.period);
-    return {loggedIn: !!authToken, homework: assignment, subject, loading: false};
+    const lesson = utils.getLesson(timetable, moment(assignment.due), assignment.period);
+    return {loggedIn: !!authToken, homework: assignment, lesson, loading: false};
 }, actions)(withRouter(HomeworkView));

@@ -9,14 +9,14 @@ export const periodStarts = [
     {i: 5, h: 15, m: 15}
 ];
 
-export const firstInstanceOfSubject = (subject, date, timetable) => {
+export const firstInstanceOfSubject = (subject, teacher, date, timetable) => {
     const day = date.isoWeekday() - 1;
     if(day > 4) throw new Error('Cannot be on weekend!');
-    return timetable[day].findIndex(period => period.subject === subject);
+    return timetable[day].findIndex(period => period.subject === subject && period.teacher === teacher);
 }
 
-export const getNextPeriodsOfSubject = (subject, timetable, count) => {
-    const daysWithSubject = timetable.map(day => day.reduce((found, period) => found || (period.subject === subject && !period.free), false));
+export const getNextPeriodsOfSubject = (subject, timetable, teacher, count) => {
+    const daysWithSubject = timetable.map(day => day.reduce((found, period) => found || (period.subject === subject && period.teacher === teacher && !period.free), false));
     if(daysWithSubject.filter(x => x).length === 0) return [];
     // E.g [false, false, true, false, false]
     const results = [];
@@ -38,7 +38,7 @@ export const getPassedPeriods = (date, lessons) => periodStarts
 
 export const periodToOrdinal = period => ['First', 'Second', 'Third', 'Fourth', 'Fifth', 'Sixth'][period - 1];
 
-export const getSubject = (timetable, date, period) => {
+export const getLesson = (timetable, date, period) => {
     const dayOfWeek = date.isoWeekday() - 1;
     if(dayOfWeek > 4) throw new Error('Cannot be on weekend!');
     return timetable[dayOfWeek][period];
@@ -130,6 +130,12 @@ export const getAllSubjectsInTimetable = timetable => {
         results.add(period.subject);
     }));
     return Array.from(results);
+}
+
+export const getTeachersOfSubject = (subject, timetable) => {
+    const teachers = new Set();
+    timetable.forEach(day => day.forEach(lesson => lesson.subject === subject && !!lesson.teacher ? teachers.add(lesson.teacher) : null));
+    return [...teachers];
 }
 
 export const getShortRoom = room => {

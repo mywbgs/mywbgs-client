@@ -33,17 +33,30 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
 
     const lessons = suggestedPeriods.map(period => timetable[dayOfWeek][period]).filter(period => !period.free).slice(0, 2);
     const subjects = lessons.map(lesson => lesson.subject);
+
     let selectedSubject = subjects[0];
     if(homework) {
-        const homeworkSubject = utils.getSubject(timetable, moment(homework.due), homework.period).subject;
+        const homeworkSubject = utils.getLesson(timetable, moment(homework.due), homework.period).subject;
         const subjectIndex = subjects.findIndex(subject => subject === homeworkSubject);
         if(subjectIndex === -1) {
             subjects.push(homeworkSubject);
         }
         selectedSubject = homeworkSubject;
     }
+
+    const teacherOptions = utils.getTeachersOfSubject(selectedSubject, timetable);
+    // Ensure current periods teacher is first
+    if(teacherOptions[0] !== lessons[0].teacher) {
+        const otherTeacher = teacherOptions[0];
+        teacherOptions[0] = lessons[0].teacher;
+        teacherOptions.push(otherTeacher);
+    }
+    let selectedTeacher = teacherOptions[0];
+    if(homework) {
+        selectedTeacher = timetable[dayOfWeek][homework.period];
+    }
     
-    const dateOptions = utils.getNextPeriodsOfSubject(selectedSubject, timetable, 2);
+    const dateOptions = utils.getNextPeriodsOfSubject(selectedSubject, timetable, selectedTeacher, 2);
     let selectedDate = dateOptions[0];
     if(homework) {
         const homeworkDue = moment(homework.due);
@@ -57,6 +70,8 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
     return {
         subjects,
         selectedSubject,
+        teacherOptions,
+        selectedTeacher,
         dateOptions,
         selectedDate,
         title: homework ? homework.title : '',
@@ -64,10 +79,15 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
     };
 });
 export const editSelectSubject = createAction('EDIT_SELECT_SUBJECT', (subject, timetable) => {
-    const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, 2);
-    return {subject, dateOptions, selectedDate: dateOptions[0]};
+    const teacherOptions = utils.getTeachersOfSubject(subject, timetable);
+    const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, teacherOptions[0], 2);
+    return {subject, teacherOptions, selectedTeacher: teacherOptions[0], dateOptions, selectedDate: dateOptions[0]};
 });
 export const editSetModalOpen = createAction('SET_MODAL_OPEN', modal => modal);
+export const editSelectTeacher = createAction('EDIT_SELECT_TEACHER', (subject, teacher, timetable) => {
+    const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, teacher, 2);
+    return {selectedTeacher: teacher, dateOptions, selectedDate: dateOptions[0]};
+});
 export const editSelectDate = createAction('EDIT_SELECT_DATE', date => date);
 export const editUpdateField = createAction('EDIT_UPDATE_FIELD', (field, value) => ({field, value}));
 
