@@ -238,10 +238,12 @@ textarea:-moz-placeholde {
     margin: 16px 0;
     margin-left: 16px;
     transition: font-weight 100ms ease;
+    opacity: 0.85;
 }
 
 .OptionGroup .Option.Option--selected {
     font-weight: 700;
+    opacity: 1;
 }
 
 .CheckCircle {

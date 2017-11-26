@@ -89,7 +89,7 @@ class HomeworkEdit extends Component {
     }
 
     onKeyDown = e => {
-        if(e.ctrlKey && e.keyCode === 13 && this.isValid()) {
+        if(e.ctrlKey && e.keyCode === 13) {
             this.save(e);
         }
     }

@@ -35,6 +35,8 @@ export default handleActions({
             ...initial,
             subjectOptions: action.payload.subjects,
             selectedSubject: action.payload.selectedSubject,
+            teacherOptions: action.payload.teacherOptions,
+            selectedTeacher: action.payload.selectedTeacher,
             dateOptions: action.payload.dateOptions,
             selectedDate: action.payload.selectedDate,
             title: action.payload.title || '',

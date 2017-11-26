@@ -51,14 +51,14 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
 
     const teacherOptions = utils.getTeachersOfSubject(selectedSubject, timetable);
     // Ensure current periods teacher is first
-    if(teacherOptions[0] !== lessons[0].teacher) {
+    if(selectedSubject === lessons[0].subject && teacherOptions[0] !== lessons[0].teacher) {
         const otherTeacher = teacherOptions[0];
         teacherOptions[0] = lessons[0].teacher;
         teacherOptions.push(otherTeacher);
     }
     let selectedTeacher = teacherOptions[0];
     if(homework) {
-        selectedTeacher = timetable[dayOfWeek][homework.period];
+        selectedTeacher = utils.getLesson(timetable, moment(homework.due), homework.period).teacher;
     }
     
     const dateOptions = utils.getNextPeriodsOfSubject(selectedSubject, timetable, selectedTeacher, 2);
