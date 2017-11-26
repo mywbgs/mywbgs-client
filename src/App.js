@@ -10,21 +10,23 @@ import HomeworkView from './screens/homework/HomeworkView';
 import Menu from './screens/Menu';
 import Calendar from './screens/Calendar';
 import Timetable from './screens/Timetable';
-import withTracker from './withTracker';
+import withTracker from './components/withTracker';
+
+const wrapper = component => withTracker(component);
 
 const App = props => {
     const router = (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/" component={withTracker(Home)}/>
-                <Route exact path="/login" component={withTracker(Login)}/>
-                <Route exact path="/homework" component={withTracker(Homework)}/>
-                <Route exact path="/homework/new" component={withTracker(HomeworkEdit)}/>
-                <Route exact path="/homework/:id/edit" component={withTracker(HomeworkEdit)}/>
-                <Route exact path="/homework/:id/view" component={withTracker(HomeworkView)}/>
-                <Route exact path="/menu" component={withTracker(Menu)}/>
-                <Route exact path="/calendar" component={withTracker(Calendar)}/>
-                <Route exact path="/timetable" component={withTracker(Timetable)}/>
+                <Route exact path="/" component={wrapper(Home)}/>
+                <Route exact path="/login" component={wrapper(Login)}/>
+                <Route exact path="/homework" component={wrapper(Homework)}/>
+                <Route exact path="/homework/new" component={wrapper(HomeworkEdit)}/>
+                <Route exact path="/homework/:id/edit" component={wrapper(HomeworkEdit)}/>
+                <Route exact path="/homework/:id/view" component={wrapper(HomeworkView)}/>
+                <Route exact path="/menu" component={wrapper(Menu)}/>
+                <Route exact path="/calendar" component={wrapper(Calendar)}/>
+                <Route exact path="/timetable" component={wrapper(Timetable)}/>
             </Switch>
         </BrowserRouter>
     );

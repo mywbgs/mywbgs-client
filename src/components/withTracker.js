@@ -2,6 +2,7 @@ import React, {
     Component
 } from 'react';
 import GoogleAnalytics from 'react-ga';
+import ErrorBoundary from './ErrorBoundary';
 
 GoogleAnalytics.initialize('UA-109842496-1');
 
@@ -34,9 +35,7 @@ const withTracker = (WrappedComponent, options = {}) => {
         }
 
         render() {
-            return <WrappedComponent { ...this.props
-            }
-            />;
+            return <ErrorBoundary><WrappedComponent {...this.props}/></ErrorBoundary>;
         }
     };
 

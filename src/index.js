@@ -12,15 +12,9 @@ if(process.env.NODE_ENV === 'production') {
     Raven.config('https://bcdf160b5c1647d8b4bd4de442eb74c4@sentry.io/247337').install();
 }
 
-try {
+Raven.context(function() {
     ReactDOM.render(<App store={store}/>, document.getElementById('root'));
-} catch(err) {
-    if(process.env.NODE_ENV === 'production') {
-        Raven.captureException(err);
-        Raven.showReportDialog();
-        console.log('Error logged to Sentry');
-    } else {
-        throw err;
-    }
-}
+});
+
+    
 registerServiceWorker();
