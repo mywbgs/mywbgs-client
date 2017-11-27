@@ -136,7 +136,7 @@ class HomeworkEdit extends Component {
                                 selected={selectedTeacherIndex}
                                 onSelected={this.selectTeacherFromIndex}/>
                         : null}
-                        {formState.subjectOptions.length > 1 ?
+                        {formState.dateOptions.length > 0 ?
                             <OptionGroup
                                 title="Due"
                                 options={[...dateOptions]}
