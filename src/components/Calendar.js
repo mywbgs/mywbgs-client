@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 import * as moment from 'moment';
 
 const createNonStandarDay = date => ({standard: false, date});
@@ -45,7 +46,7 @@ const Calendar = props => {
         </tr>));
     return (
         <div className="Calendar">
-            <p className="title" onClick={props.onMonthClicked}>{moment.months()[month]} {year}</p>
+            <p className="title" onClick={props.onMonthClicked}>{moment.months()[month]} {year}&nbsp;&nbsp;<FontAwesome name="angle-down"/></p>
             <table>
                 <thead>
                     <tr>
