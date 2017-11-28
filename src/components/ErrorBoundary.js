@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as Raven from 'raven-js';
+import ReactGA from 'react-ga';
 
 import Container from './Container';
 
@@ -9,6 +10,10 @@ class ErrorBoundary extends Component {
     componentDidCatch(error, errorInfo) {
         if(process.env.NODE_ENV === 'production') {
             this.setState({error});
+            ReactGA.exception({
+                error: this.state.errorInfo,
+                fatal: false
+            });
             Raven.captureException(error, {extra: errorInfo});
             Raven.showReportDialog();
         } else {

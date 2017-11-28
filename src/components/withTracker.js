@@ -1,18 +1,16 @@
 import React, {
     Component
 } from 'react';
-import GoogleAnalytics from 'react-ga';
+import ReactGA from 'react-ga';
 import ErrorBoundary from './ErrorBoundary';
-
-GoogleAnalytics.initialize('UA-109842496-1');
 
 const withTracker = (WrappedComponent, options = {}) => {
     const trackPage = page => {
-        GoogleAnalytics.set({
+        ReactGA.set({
             page,
             ...options,
         });
-        GoogleAnalytics.pageview(page);
+        ReactGA.pageview(page);
     };
 
     const HOC = class extends Component {

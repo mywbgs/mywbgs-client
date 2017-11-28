@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions';
 import * as moment from 'moment';
 import Raven from 'raven-js';
+import ReactGA from 'react-ga';
 
 import * as utils from './utils';
 
@@ -14,6 +15,10 @@ export const login = (username, password) => {
         api.login(username, password)
             .then(result => {
                 if(result.success) {
+                    ReactGA.event({
+                        category: 'User',
+                        action: 'Login'
+                    });
                     dispatch(loginSuccess(result.token));
                 } else {
                     dispatch(loginFailure(result.message));
@@ -22,9 +27,11 @@ export const login = (username, password) => {
     };
 };
 export const logout = createAction('LOGOUT', () => {
-    if(process.env.NODE_ENV === 'production') {
-        Raven.setUserContext();
-    }
+    ReactGA.event({
+        category: 'User',
+        action: 'Logout'
+    });
+    Raven.setUserContext();
 });
 
 export const calendarChangeDate = createAction('CALENDAR_CHANGE_DATE', newDate => newDate);
@@ -84,16 +91,33 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
     };
 });
 export const editSelectSubject = createAction('EDIT_SELECT_SUBJECT', (subject, timetable) => {
+    ReactGA.event({
+        category: 'Homework Edit',
+        action: 'Change Subject'
+    })
     const teacherOptions = utils.getTeachersOfSubject(subject, timetable);
     const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, teacherOptions[0], 2);
     return {subject, teacherOptions, selectedTeacher: teacherOptions[0], dateOptions, selectedDate: dateOptions[0]};
 });
-export const editSetModalOpen = createAction('SET_MODAL_OPEN', modal => modal);
+export const editSetModalOpen = createAction('EDIT_SET_MODAL_OPEN', modal => {
+    ReactGA.modalview(modal);
+    return modal;
+});
 export const editSelectTeacher = createAction('EDIT_SELECT_TEACHER', (subject, teacher, timetable) => {
+    ReactGA.event({
+        category: 'Homework Edit',
+        action: 'Change Teacher'
+    });
     const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, teacher, 2);
     return {selectedTeacher: teacher, dateOptions, selectedDate: dateOptions[0]};
 });
-export const editSelectDate = createAction('EDIT_SELECT_DATE', date => date);
+export const editSelectDate = createAction('EDIT_SELECT_DATE', date => {
+    ReactGA.event({
+        category: 'Homework Edit',
+        action: 'Change Date'
+    });
+    return date;
+});
 export const editUpdateField = createAction('EDIT_UPDATE_FIELD', (field, value) => ({field, value}));
 
 export const saveStart = createAction('SAVE_START');
@@ -104,7 +128,19 @@ export const saveHomework = homework => {
         const { authToken } = getState().datastore;
         dispatch(saveStart());
         api.createHomework(authToken, homework)
-            .then(result => dispatch(saveHomeworkSuccess(result)), err => dispatch(saveFailed(err)));
+            .then(result => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Save'
+                })
+                dispatch(saveHomeworkSuccess(result));
+            }, err => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Save Error'
+                });
+                dispatch(saveFailed(err));
+            });
     };
 }
 export const saveHomeworkSuccess = createAction('SAVE_HOMEWORK_SUCCCESS', homework => ({homework}));
@@ -114,7 +150,19 @@ export const updateHomework = (id, partial) => {
         const { authToken } = getState().datastore;
         dispatch(saveStart());
         api.updateHomework(authToken, id, partial)
-            .then(result => dispatch(updateHomeworkSuccess(id, result)), err => dispatch(saveFailed(err)));
+            .then(result => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Modify'
+                });
+                dispatch(updateHomeworkSuccess(id, result));
+            }, err => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Modify Error'
+                });
+                dispatch(saveFailed(err));
+            });
     }
 }
 export const updateHomeworkSuccess = createAction('UPDATE_HOMEWORK_SUCCESS', (id, partial) => ({id, partial}));
@@ -124,7 +172,19 @@ export const deleteHomework = id => {
         const { authToken } = getState().datastore;
         dispatch(saveStart());
         api.deleteHomework(authToken, id)
-            .then(success => dispatch(deleteHomeworkSuccess(id)), err => dispatch(saveFailed(err)));
+            .then(success => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Delete'
+                })
+                dispatch(deleteHomeworkSuccess(id));   
+            }, err => {
+                ReactGA.event({
+                    category: 'Homework',
+                    action: 'Delete Error'
+                });
+                dispatch(saveFailed(err));
+            });
     }
 }
 export const deleteHomeworkSuccess = createAction('DELETE_HOMEWORK_SUCCESS', id => ({id}));
