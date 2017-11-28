@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import Helmet from 'react-helmet';
 
 import './Login.css';
 import Page from '../components/Page';
@@ -38,6 +39,7 @@ class Login extends Component {
         const buttonDisabled = this.props.username.trim().length === 0 || this.props.password.length === 0;
         return (
             <Page name="login">
+                <Helmet>Login</Helmet>
                 <Container>
                     <form onSubmit={this.submit}>
                         <span className="Logo">MyWBGS</span>

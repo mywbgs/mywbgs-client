@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
 import './Home.css';
 import Page from '../components/Page';
@@ -61,6 +62,7 @@ class Home extends Component {
     render() {
         return (
             <Page name="index">
+                <Helmet>MyWBGS</Helmet>
                 <div className="IndexTitle"><span>MyWBGS</span><a href="#" className="Link--Seconday" onClick={this.logout}>Logout</a>{this.props.updateStatus ? <a href="#" onClick={this.update}>Update</a> : null}</div>
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
