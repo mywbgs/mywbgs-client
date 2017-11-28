@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import Helmet from 'react-helmet';
 import * as moment from 'moment';
 
 import Page from '../../components/Page';
@@ -83,7 +84,8 @@ class Homework extends Component {
 
             return (
                 <Page name="homework">
-                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
+                    <Helmet><title>Homework</title></Helmet>
+                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.push('/')}>
                         <div className="expand">Homework</div>
                         <div>
                             <FontAwesome name="plus" onClick={addNew(this.props.history)}/>
@@ -97,7 +99,8 @@ class Homework extends Component {
         } else {
             return (
                 <Page name="homework">
-                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
+                    <Helmet><title>Homework</title></Helmet>
+                    <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.push('/')}>
                         Homework
                     </Header>
                     <LoadingSpinner colour={HOMEWORK_COLOUR}/>

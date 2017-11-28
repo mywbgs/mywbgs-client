@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import * as moment from 'moment';
 
 import Page from '../../components/Page';
@@ -17,9 +18,13 @@ import * as actions from '../../actions';
 import {HOMEWORK_COLOUR} from '../../consts';
 
 class HomeworkView extends Component {
-    viewHomework = () => this.props.history.push(`/homework/${this.props.homework.id}/edit`);
+    viewHomework = () => this.props.history.push(`edit`);
 
     deleteHomework = () => {
+        /* eslint-disable */
+        if(!confirm(`Are you sure you want to delete "${this.props.homework.title}"`)) {
+            return;
+        } 
         this.props.deleteHomework(this.props.homework.id);
         this.props.history.replace('/homework');
     }
@@ -54,7 +59,8 @@ class HomeworkView extends Component {
     render() {
         const spinner = (
             <Page name="homeworkview">
-                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
+                <Helmet><title>View homework</title></Helmet>
+                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.push('/')}>
                     View Homework
                 </Header>
                 <LoadingSpinner colour={HOMEWORK_COLOUR}/>
@@ -62,7 +68,8 @@ class HomeworkView extends Component {
         );
         const page = this.props.homework ? (
             <Page name="homeworkview">
-                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.goBack()}>
+                <Helmet><title>{this.props.lesson.subject} · {this.props.homework.title}</title></Helmet>
+                <Header colour={HOMEWORK_COLOUR} onBack={() => this.props.history.push('/homework')}>
                     <div className="expand">
                         {this.props.homework.title}
                         <div className="Header__small">{this.props.lesson.subject}</div>
