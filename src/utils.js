@@ -152,5 +152,6 @@ export const getShortRoom = room => {
     room = room.replace('economics ', 'ec');
     room = room.replace('maths room ', 'm');
     room = room.replace('room ', '');
+    room = room.replace(' - sixth form block', '');
     return room.toUpperCase();
 }
