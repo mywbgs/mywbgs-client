@@ -12,8 +12,12 @@ export async function login(username, password) {
             url: '/student/authenticate',
             data: {username, password}
         });
-        if(response.data && response.data.success) {
-            return {success: true, token: response.data.result};
+        if(response.data) {
+            if(response.data.success) {
+                return {success: true, token: response.data.result};
+            } else {
+                return {success: false, message: 'Incorrect username or password'};
+            }
         }
     } catch(err) {
         let message = `Could not connect to server`;
