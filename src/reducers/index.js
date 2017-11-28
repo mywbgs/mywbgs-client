@@ -6,7 +6,7 @@ import homeworkEdit from './homeworkedit';
 
 import * as actions from '../actions';
 
-const updateStatus = handleAction(actions.setUpdateStatus, (state, action) => action.payload, process.env.NODE_ENV === 'production' ? 'LOADING' : 'NO_UPDATE');
+const updateStatus = handleAction(actions.setUpdateStatus, (state, action) => action.payload, 'NO_UPDATE');
 
 const login = handleActions({
     [actions.loginUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),

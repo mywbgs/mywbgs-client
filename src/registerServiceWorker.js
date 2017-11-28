@@ -33,7 +33,6 @@ export default function register() {
                                     // At this point, everything has been precached.
                                     // It's the perfect time to display a
                                     // "Content is cached for offline use." message.
-                                    store.dispatch(setUpdateStatus('NO_UPDATE'));
                                     console.log('Content is cached for offline use.');
                                 }
                             }
