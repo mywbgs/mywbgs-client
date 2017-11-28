@@ -45,6 +45,8 @@ class Home extends Component {
         return;
     }
 
+    update = e => window.location.reload(false);
+
     shouldShowMenu = () => {
         // if(this.props.loadingProfile) {
         //     return false;
@@ -59,7 +61,7 @@ class Home extends Component {
     render() {
         return (
             <Page name="index">
-                <div className="IndexTitle"><span>MyWBGS</span><a href="#" onClick={this.logout}>Logout</a></div>
+                <div className="IndexTitle"><span>MyWBGS</span><a href="#" className="Link--Seconday" onClick={this.logout}>Logout</a>{this.props.updateStatus ? <a href="#" onClick={this.update}>Update</a> : null}</div>
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
                 <IndexSection title="Timetable" colour={consts.TIMETABLE_COLOUR} onClick={this.navigateTo('/timetable')}/>
@@ -70,6 +72,7 @@ class Home extends Component {
 }
 
 export default connect(state => {
+    const { updateStatus } = state;
     const { authToken, profile, loadingProfile } = state.datastore;
-    return {loggedIn: !!authToken, profile, loadingProfile};
+    return {loggedIn: !!authToken, profile, loadingProfile, updateStatus};
 }, actions)(Home);

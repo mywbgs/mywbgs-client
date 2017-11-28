@@ -8,6 +8,9 @@
 // To learn more about the benefits of this model, read https://goo.gl/KwvDNy.
 // This link also includes instructions on opting out of this behavior.
 
+import store from './store';
+import {updateAvailable} from './actions';
+
 export default function register() {
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -24,6 +27,7 @@ export default function register() {
                                     // the fresh content will have been added to the cache.
                                     // It's the perfect time to display a "New content is
                                     // available; please refresh." message in your web app.
+                                    store.dispatch(updateAvailable());
                                     console.log('New content is available; please refresh.');
                                 } else {
                                     // At this point, everything has been precached.

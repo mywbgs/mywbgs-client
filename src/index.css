@@ -37,6 +37,10 @@ a {
     color: #00897B;
 }
 
+a.Link--Seconday {
+    color: #666666;
+}
+
 table {
     border-spacing: 0;
     width: 100%;

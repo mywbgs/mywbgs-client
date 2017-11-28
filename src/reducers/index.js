@@ -1,10 +1,12 @@
-import { handleActions } from 'redux-actions';
+import { handleActions, handleAction } from 'redux-actions';
 import * as moment from 'moment';
 
 import datastore from './datastore';
 import homeworkEdit from './homeworkedit';
 
 import * as actions from '../actions';
+
+const updateStatus = handleAction(actions.updateAvailable, (state, action) => true, false)
 
 const login = handleActions({
     [actions.loginUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),
@@ -30,4 +32,4 @@ const calendar = handleActions({
     month: moment()
 });
 
-export {datastore, calendar, homeworkEdit, login};
+export {datastore, calendar, homeworkEdit, login, updateStatus};
