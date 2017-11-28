@@ -32,12 +32,12 @@ p.pre-wrap {
     white-space: pre-wrap;
 }
 
-a {
+a, .FauxLink {
     text-decoration: none;
     color: #00897B;
 }
 
-a.Link--Seconday {
+a.Link--Seconday, .FauxLink.FauxLink--Secondary {
     color: #666666;
 }
 

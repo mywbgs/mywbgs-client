@@ -42,7 +42,7 @@
     font-weight: 700;
 }
 
-.Page--index .IndexTitle a {
+.Page--index .IndexTitle div {
     float: right;
     position: relative;
     top: 2px;

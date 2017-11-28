@@ -58,12 +58,21 @@ class Home extends Component {
         // }
         return true;
     }
+
+    getStatus = () => {
+        if(this.props.updateStatus === 'LOADING') {
+            return <div className="FauxLink FauxLink--Secondary">Updating</div>;
+        } else if(this.props.updateStatus === 'READY') {
+            return <div className="FauxLink" onClick={this.update}>Update</div>;
+        }
+        return null;
+    }
     
     render() {
         return (
             <Page name="index">
                 <Helmet>MyWBGS</Helmet>
-                <div className="IndexTitle"><span>MyWBGS</span><a href="#" className="Link--Seconday" onClick={this.logout}>Logout</a>{this.props.updateStatus ? <a href="#" onClick={this.update}>Update</a> : null}</div>
+                <div className="IndexTitle"><span>MyWBGS</span><div className="FauxLink FauxLink--Secondary" onClick={this.logout}>Logout</div>{this.getStatus()}</div>
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
                 <IndexSection title="Timetable" colour={consts.TIMETABLE_COLOUR} onClick={this.navigateTo('/timetable')}/>

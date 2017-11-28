@@ -6,7 +6,7 @@ import homeworkEdit from './homeworkedit';
 
 import * as actions from '../actions';
 
-const updateStatus = handleAction(actions.updateAvailable, (state, action) => true, false)
+const updateStatus = handleAction(actions.setUpdateStatus, (state, action) => action.payload, 'LOADING');
 
 const login = handleActions({
     [actions.loginUpdateField]: (state, action) => ({...state, [action.payload.field]: action.payload.value}),

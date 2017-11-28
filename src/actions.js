@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 
 import * as utils from './utils';
 
-export const updateAvailable = createAction('UPDATE_AVAILABLE');
+export const setUpdateStatus = createAction('UPDATE_AVAILABLE', (status) => status);
 
 export const loginUpdateField = createAction('LOGIN_UPDATE_FIELD', (field, value) => ({field, value}));
 export const loginPending = createAction('LOGIN_PENDING');
