@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import * as moment from 'moment';
 import * as Fuse from 'fuse.js';
 
@@ -91,14 +92,15 @@ class Calendar extends Component {
             contents = <List title={selectedDate.format('Do MMMM YYYY')} border items={events}/>;
         } else {
             const query = this.props.query.trim().toLowerCase();
-            const events = this.fuse.search(this.props.query)
+            const events = this.fuse.search(query)
                 .map(event => <ListItem key={event.id} title={event.summary} subtitle={utils.labelForDurationLong(moment(event.start), moment(event.end))}/>);
             contents = <List title="Search results" border items={events}/>;
         }
 
         const spinner = (
             <Page name="calendar">
-                <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.goBack()}>
+                <Helmet><title>Calendar</title></Helmet>
+                <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.push('/')}>
                     Calendar
                 </Header>
                 <LoadingSpinner colour={CALENDAR_COLOUR}/>
@@ -106,8 +108,9 @@ class Calendar extends Component {
         );
         const page = (
             <Page name="calendar">
+                <Helmet><title>Calendar</title></Helmet>
                 <div className="FauxHeader" style={{backgroundColor: CALENDAR_COLOUR}}>
-                    <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.goBack()} noshadow>
+                    <Header colour={CALENDAR_COLOUR} onBack={() => this.props.history.push('/')} noshadow>
                         Calendar
                     </Header>
                     <Container>

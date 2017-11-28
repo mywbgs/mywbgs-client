@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import * as moment from 'moment';
 
 import './HomeworkEdit.css';
@@ -122,7 +123,8 @@ class HomeworkEdit extends Component {
 
             return (
                 <Page name="homeworkedit" background={HOMEWORK_COLOUR}>
-                    <Header colour="transparent" noshadow onBack={() => this.props.history.goBack()}>Edit homework</Header>
+                    <Helmet><title>{this.props.homework ? `Edit · ${this.props.homework.title}` : `Create homework`}</title></Helmet>
+                    <Header colour="transparent" noshadow onBack={() => this.props.homework ? this.props.history.push(`view`) : this.props.history.push('/homework')}>Edit homework</Header>
                     <Container horizontal>
                         <OptionGroup
                             title="Subject"
@@ -157,7 +159,7 @@ class HomeworkEdit extends Component {
         } else {
             return (
                 <Page name="homeworkedit">
-                    <Header colour="transparent" noshadow onBack={() => this.props.history.goBack()}>Edit homework</Header>
+                    <Header colour="transparent" noshadow onBack={() => this.props.homework ? this.props.history.push(`${this.props.homework.id}/view`) : this.props.history.push('/homework')}>Edit homework</Header>
                     <LoadingSpinner colour="white"/>
                 </Page>
             )

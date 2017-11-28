@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as moment from 'moment';
+import Helmet from 'react-helmet';
 
 import Page from '../components/Page';
 import Header from '../components/Header';
@@ -53,7 +54,8 @@ class Timetable extends Component {
 
         return (
             <Page name="timetable">
-                <Header colour={TIMETABLE_COLOUR} onBack={() => this.props.history.goBack()}>
+                <Helmet><title>Timetable</title></Helmet>
+                <Header colour={TIMETABLE_COLOUR} onBack={() => this.props.history.push('/')}>
                     Timetable
                 </Header>
                 {this.props.loadingTimetable ? spinner : page}

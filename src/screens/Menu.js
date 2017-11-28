@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 import * as moment from 'moment';
 
@@ -31,28 +32,23 @@ class Menu extends Component {
             ]
             return <List key={'day' + dayi} title={title} items={options}/>;
         });
-
-        const header = (
-            <Header colour={MENU_COLOUR} onBack={() => this.props.history.goBack()}>
-                Menu
-            </Header>
-        );
-        const spinner = (
-            <Page name="menu">
-                {header}
-                <LoadingSpinner colour={MENU_COLOUR}/>
-            </Page>
-        );
+        
+        const spinner = <LoadingSpinner colour={MENU_COLOUR}/>;
         const page = (
-            <Page name="menu">
-                {header}
-                <Container vertical>
-                    {items}
-                </Container>
-            </Page>
+            <Container vertical>
+                {items}
+            </Container>
         );
 
-        return this.props.loadingMenu ? spinner : page;
+        return (
+            <Page name="menu">
+                <Helmet><title>Canteen menu</title></Helmet>
+                <Header colour={MENU_COLOUR} onBack={() => this.props.history.push('/')}>
+                    Menu
+                </Header>
+                {this.props.loadingMenu ? spinner : page}
+            </Page>
+        );
     }
 }
 
