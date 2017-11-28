@@ -8,12 +8,14 @@ import * as reducers from './reducers';
 
 import { downloadAll } from './actions';
 
+const middleware = [
+    thunk.withExtraArgument(api),
+    process.env.NODE_ENV !== 'production' && logger
+].filter(x => !!x);
+
 const store = createStore(
     combineReducers(reducers),
-    applyMiddleware(
-        thunk.withExtraArgument(api),
-        logger,
-    ),
+    applyMiddleware(...middleware),
     autoRehydrate()
 );
 
@@ -24,5 +26,9 @@ persistStore(store, {
         store.dispatch(downloadAll());
     }
 });
+
+if(process.env.NODE_ENV !== 'production') {
+    window._store = store;
+}
 
 export default store;
