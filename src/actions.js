@@ -101,10 +101,7 @@ export const editSelectSubject = createAction('EDIT_SELECT_SUBJECT', (subject, t
     const dateOptions = utils.getNextPeriodsOfSubject(subject, timetable, teacherOptions[0], 2);
     return {subject, teacherOptions, selectedTeacher: teacherOptions[0], dateOptions, selectedDate: dateOptions[0]};
 });
-export const editSetModalOpen = createAction('EDIT_SET_MODAL_OPEN', modal => {
-    ReactGA.modalview(modal);
-    return modal;
-});
+export const editSetModalOpen = createAction('EDIT_SET_MODAL_OPEN', modal => modal);
 export const editSelectTeacher = createAction('EDIT_SELECT_TEACHER', (subject, teacher, timetable) => {
     ReactGA.event({
         category: 'Homework Edit',
