@@ -13,16 +13,23 @@
     display: flex;
     align-items: center;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-
+    cursor: pointer;
+    
     text-transform: uppercase;
     letter-spacing: 3px;
     /* box-shadow: 0 -2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08); */
+}
+
+.Page--index .IndexSection:hover .IndexSectionContent {
+    opacity: 1;
 }
 
 .IndexSectionContent {
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
+    opacity: 0.85;
+    transition: opacity 35ms ease;
 }
 
 .Page--index .IndexSection--small {

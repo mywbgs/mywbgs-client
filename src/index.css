@@ -241,7 +241,7 @@ textarea:-moz-placeholde {
 .OptionGroup .Option {
     margin: 16px 0;
     margin-left: 16px;
-    transition: font-weight 100ms ease;
+    transition: font-weight 100ms ease, opacity 100ms ease;
     opacity: 0.85;
 }
 
