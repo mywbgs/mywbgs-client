@@ -24,7 +24,7 @@ const App = props => {
                 <Route exact path="/homework/new" component={wrapper(HomeworkEdit)}/>
                 <Route exact path="/homework/:id/edit" component={wrapper(HomeworkEdit)}/>
                 <Route exact path="/homework/:id/view" component={wrapper(HomeworkView)}/>
-                <Route exact path="/menu" component={wrapper(Menu)}/>
+                <Route exact path="/canteen" component={wrapper(Menu)}/>
                 <Route exact path="/calendar" component={wrapper(Calendar)}/>
                 <Route exact path="/timetable" component={wrapper(Timetable)}/>
             </Switch>

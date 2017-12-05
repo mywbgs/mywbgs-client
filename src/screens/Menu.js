@@ -42,7 +42,7 @@ class Menu extends Component {
 
         return (
             <Page name="menu">
-                <Helmet><title>Canteen menu</title></Helmet>
+                <Helmet><title>Canteen Menu</title></Helmet>
                 <Header colour={MENU_COLOUR} onBack={() => this.props.history.push('/')}>
                     Menu
                 </Header>
