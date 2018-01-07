@@ -79,7 +79,7 @@ class HomeworkView extends Component {
                     </div>
                 </Header>
                 <Container>
-                    <DetailsTable labels={['Due', 'Teacher', 'Period']} values={[moment(this.props.homework.due).format('Do MMMM'), this.props.lesson.teacher, utils.periodToOrdinal(this.props.homework.period + 1)]}/>
+                    <DetailsTable labels={['Due', 'Teacher', 'Period', 'Created']} values={[moment(this.props.homework.due).format('Do MMMM'), this.props.lesson.teacher, utils.periodToOrdinal(this.props.homework.period + 1), moment(this.props.homework.createdAt).format('Do MMMM')]}/>
                     <p className="pre-wrap">{this.props.homework.notes}</p>
                     <Spacer vertical="8px"/>
                     <div className="ButtonGroup">
