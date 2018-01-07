@@ -61,9 +61,9 @@ export const editLoad = createAction('EDIT_LOAD', (date, timetable, homework) =>
     const teacherOptions = utils.getTeachersOfSubject(selectedSubject, timetable);
     // Ensure current periods teacher is first
     if(lessons.length > 0 && selectedSubject === lessons[0].subject && teacherOptions[0] !== lessons[0].teacher) {
-        const otherTeacher = teacherOptions[0];
+        const teacherIndex = teacherOptions.findIndex(teacher => teacher === lessons[0].teacher);
+        teacherOptions[teacherIndex] = teacherOptions[0];
         teacherOptions[0] = lessons[0].teacher;
-        teacherOptions.push(otherTeacher);
     }
     let selectedTeacher = teacherOptions[0];
     if(homework) {
@@ -124,6 +124,10 @@ export const saveFailed = createAction('SAVE_FAILED', err => err);
 
 export const saveHomework = homework => {
     return (dispatch, getState, api) => {
+        if(homework.title.length > 255 || homework.notes.length > 255) {
+            dispatch(saveFailed('Title and notes must be shorter than 255 characters'));
+            return;
+        }
         const { authToken } = getState().datastore;
         dispatch(saveStart());
         api.createHomework(authToken, homework)

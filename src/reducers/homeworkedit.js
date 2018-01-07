@@ -23,7 +23,7 @@ export default handleActions({
     [actions.updateHomeworkSuccess]: (state, action) => ({...state, saving: false, success: true}),
     [actions.saveFailed]: (state, action) => {
         const err = action.payload;
-        let error = 'Could not connect to server';
+        let error = err || 'Could not connect to server';
         if(err.response) {
             error = `An unknown error occurred (${err.response.status})`;
         }
