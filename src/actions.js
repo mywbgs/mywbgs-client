@@ -124,10 +124,10 @@ export const saveFailed = createAction('SAVE_FAILED', err => err);
 
 export const saveHomework = homework => {
     return (dispatch, getState, api) => {
-        if(homework.title.length > 255 || homework.notes.length > 255) {
-            dispatch(saveFailed('Title and notes must be shorter than 255 characters'));
-            return;
-        }
+        // if(homework.title.length > 255 || homework.notes.length > 255) {
+        //     dispatch(saveFailed('Title and notes must be shorter than 255 characters'));
+        //     return;
+        // }
         const { authToken } = getState().datastore;
         dispatch(saveStart());
         api.createHomework(authToken, homework)
