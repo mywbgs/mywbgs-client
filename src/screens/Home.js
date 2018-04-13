@@ -76,7 +76,7 @@ class Home extends Component {
                 <IndexSection title="Homework" colour={consts.HOMEWORK_COLOUR} onClick={this.navigateTo('/homework')}/>
                 <IndexSection title="Calendar" colour={consts.CALENDAR_COLOUR} onClick={this.navigateTo('/calendar')}/>
                 <IndexSection title="Timetable" colour={consts.TIMETABLE_COLOUR} onClick={this.navigateTo('/timetable')}/>
-                {this.shouldShowMenu() ? <IndexSection title="Canteen" colour={consts.MENU_COLOUR} onClick={this.navigateTo('/canteen')}/> : null}
+                {/* {this.shouldShowMenu() ? <IndexSection title="Canteen" colour={consts.MENU_COLOUR} onClick={this.navigateTo('/canteen')}/> : null} */}
             </Page>
         );
     }
