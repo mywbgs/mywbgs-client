@@ -55,7 +55,7 @@ class Calendar extends Component {
     }
 
     render() {
-        const selectedDate = this.props.selectedDate;
+        const selectedDate = this.props.selectedDate.utcOffset(0, true);
         const selectedDateStart = selectedDate.clone().startOf('day');
         const selectedDateEnd = selectedDate.clone().add(1, 'day').startOf('day');
         
