@@ -10,7 +10,7 @@ const generateCalendar = (month, year) => {
     const daysInMonth = moment({month, year}).daysInMonth();
     const firstDayOfMonth = moment({month, year, day: 1});
     const firstDayIndex = firstDayOfMonth.isoWeekday() - 1;
-    const weeksInMonth = Math.ceil(daysInMonth / 7);
+    const weeksInMonth = Math.ceil((daysInMonth + firstDayIndex) / 7);
 
     let rows = [];
     for(let week = 0; week < weeksInMonth; week ++) {
