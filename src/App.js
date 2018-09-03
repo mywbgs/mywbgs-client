@@ -7,7 +7,6 @@ import Login from "./screens/Login";
 import Homework from "./screens/homework/Homework";
 import HomeworkEdit from "./screens/homework/HomeworkEdit";
 import HomeworkView from "./screens/homework/HomeworkView";
-import PastHomework from "./screens/homework/PastHomework";
 import Menu from "./screens/Menu";
 import Calendar from "./screens/Calendar";
 import Timetable from "./screens/Timetable";
@@ -23,7 +22,7 @@ const App = props => {
         <Route exact path="/login" component={wrapper(Login)} />
         <Route exact path="/homework" component={wrapper(Homework)} />
         <Route exact path="/homework/new" component={wrapper(HomeworkEdit)} />
-        <Route exact path="/homework/old" component={wrapper(PastHomework)} />
+        {/*<Route exact path="/homework/old" component={wrapper(PastHomework)} />*/}
         <Route
           exact
           path="/homework/:id/edit"
