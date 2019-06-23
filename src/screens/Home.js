@@ -46,7 +46,7 @@ class Home extends Component {
         return;
     }
 
-    update = e => window.location.reload(false);
+    update = e => window.location.reload(true);
 
     shouldShowMenu = () => {
         // if(this.props.loadingProfile) {
